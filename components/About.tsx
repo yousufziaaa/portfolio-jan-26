@@ -63,7 +63,7 @@ export default function About() {
               imageUrl="/board-games.JPG"
             />
           </span>
-          . If that doesn't cut it, I'll probably be out{" "}
+          . If that doesn&apos;t cut it, I&apos;ll probably be out{" "}
           <span style={{ color: "var(--accent)" }}>
             <HoverableTextWithImage
               text="taking some shots with my camera"

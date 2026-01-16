@@ -36,11 +36,11 @@ export function TextHighlighter({
         style={{
           backgroundColor: backgroundColor,
           zIndex: -1,
+          transformOrigin: "left",
         }}
         initial={{ scaleX: 0 }}
         animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
         transition={transition}
-        transformOrigin="left"
       />
       <span className="relative z-0">{children}</span>
     </span>

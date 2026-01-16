@@ -54,6 +54,8 @@ export function MatterBody({
     if (!elementRef.current) return;
 
     const element = elementRef.current;
+    // Capture element ref for cleanup
+    const elementForCleanup = element;
     const parent = element.parentElement;
     if (!parent) return;
 
@@ -418,6 +420,9 @@ export function MatterBody({
       elementRef.current.addEventListener("mouseleave", handleMouseLeave);
     }
 
+    // Capture handlers ref for cleanup (handlers are created dynamically during interactions)
+    const handlersForCleanup = handlersRef.current;
+
     return () => {
       if (startDelay) {
         clearTimeout(startDelay);
@@ -425,22 +430,22 @@ export function MatterBody({
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
-      if (elementRef.current) {
-        elementRef.current.removeEventListener("mousedown", handleMouseDown);
-        elementRef.current.removeEventListener("touchstart", handleTouchStart);
+      if (elementForCleanup) {
+        elementForCleanup.removeEventListener("mousedown", handleMouseDown);
+        elementForCleanup.removeEventListener("touchstart", handleTouchStart);
       }
       // Cleanup document listeners
-      if (handlersRef.current.mouseMove) {
-        document.removeEventListener("mousemove", handlersRef.current.mouseMove);
+      if (handlersForCleanup.mouseMove) {
+        document.removeEventListener("mousemove", handlersForCleanup.mouseMove);
       }
-      if (handlersRef.current.mouseUp) {
-        document.removeEventListener("mouseup", handlersRef.current.mouseUp);
+      if (handlersForCleanup.mouseUp) {
+        document.removeEventListener("mouseup", handlersForCleanup.mouseUp);
       }
-      if (handlersRef.current.touchMove) {
-        document.removeEventListener("touchmove", handlersRef.current.touchMove);
+      if (handlersForCleanup.touchMove) {
+        document.removeEventListener("touchmove", handlersForCleanup.touchMove);
       }
-      if (handlersRef.current.touchEnd) {
-        document.removeEventListener("touchend", handlersRef.current.touchEnd);
+      if (handlersForCleanup.touchEnd) {
+        document.removeEventListener("touchend", handlersForCleanup.touchEnd);
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
