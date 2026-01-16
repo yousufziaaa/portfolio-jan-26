@@ -36,12 +36,15 @@ export function TextHighlighter({
       style={{
         backgroundImage: `linear-gradient(${backgroundColor}, ${backgroundColor})`,
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "0 0",
+        backgroundPosition: "0 50%",
+        backgroundSize: "100% 120%",
         boxDecorationBreak: "clone",
         WebkitBoxDecorationBreak: "clone",
+        paddingTop: "0.15em",
+        paddingBottom: "0.15em",
       }}
-      initial={{ backgroundSize: "0% 100%" }}
-      animate={isInView ? { backgroundSize: "100% 100%" } : { backgroundSize: "0% 100%" }}
+      initial={{ backgroundSize: "0% 120%" }}
+      animate={isInView ? { backgroundSize: "100% 120%" } : { backgroundSize: "0% 120%" }}
       transition={transition}
     >
       {children}
