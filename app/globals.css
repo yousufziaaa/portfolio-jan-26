@@ -8,6 +8,7 @@
   --header: #333333;
   --accent: #E55F1C;
   --highlight: #F69869;
+  --timeline-bar: #5C5C48;
 }
 
 .dark {
@@ -16,6 +17,7 @@
   --header: #FFFFFF;
   --accent: #FFA234;
   --highlight: #AD6510;
+  --timeline-bar: #505050;
 }
 
 html {

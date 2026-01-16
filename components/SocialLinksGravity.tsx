@@ -32,30 +32,53 @@ export default function SocialLinksGravity() {
       if (mainContainer && typeof window !== 'undefined') {
         const rect = mainContainer.getBoundingClientRect();
         const viewportWidth = window.innerWidth;
+        const isMobile = viewportWidth < 768; // md breakpoint
         
         // Calculate positions for each link - spaced out horizontally
         const positions = socialLinks.map((link, index) => {
           let xPos: string;
-          if (link.x === "left") {
-            // Position on the left side of the container, spaced out
-            const leftArea = rect.left;
-            const spacing = leftArea / (socialLinks.filter(l => l.x === "left").length + 1);
-            const leftIndex = socialLinks.slice(0, index).filter(l => l.x === "left").length;
-            xPos = `${spacing * (leftIndex + 1)}px`; // Distribute across left area
-          } else if (link.x === "right") {
-            // Position on the right side of the container, spaced out
-            const rightAreaStart = rect.right;
-            const rightArea = viewportWidth - rightAreaStart;
-            const spacing = rightArea / (socialLinks.filter(l => l.x === "right").length + 1);
-            const rightIndex = socialLinks.slice(0, index).filter(l => l.x === "right").length;
-            xPos = `${rightAreaStart + spacing * (rightIndex + 1)}px`; // Distribute across right area
+          
+          if (isMobile) {
+            // On mobile, distribute all pills evenly across the viewport width
+            const padding = 24; // 24px padding on each side (6 * 4 = 24px)
+            const availableWidth = viewportWidth - (padding * 2);
+            const spacing = availableWidth / (socialLinks.length + 1);
+            xPos = `${padding + spacing * (index + 1)}px`;
           } else {
-            xPos = typeof link.x === "string" ? link.x : `${link.x}px`;
+            // On desktop, use original left/right distribution
+            if (link.x === "left") {
+              // Position on the left side of the container, spaced out
+              const leftArea = rect.left;
+              const spacing = leftArea / (socialLinks.filter(l => l.x === "left").length + 1);
+              const leftIndex = socialLinks.slice(0, index).filter(l => l.x === "left").length;
+              xPos = `${spacing * (leftIndex + 1)}px`; // Distribute across left area
+            } else if (link.x === "right") {
+              // Position on the right side of the container, spaced out
+              const rightAreaStart = rect.right;
+              const rightArea = viewportWidth - rightAreaStart;
+              const spacing = rightArea / (socialLinks.filter(l => l.x === "right").length + 1);
+              const rightIndex = socialLinks.slice(0, index).filter(l => l.x === "right").length;
+              xPos = `${rightAreaStart + spacing * (rightIndex + 1)}px`; // Distribute across right area
+            } else {
+              xPos = typeof link.x === "string" ? link.x : `${link.x}px`;
+            }
+          }
+          
+          // Increase vertical spacing on mobile
+          let yPos = link.y;
+          if (isMobile) {
+            // Parse the y value and multiply by a factor for mobile
+            const yMatch = link.y.match(/-?(\d+)px/);
+            if (yMatch) {
+              const yValue = parseInt(yMatch[1]);
+              // Increase spacing by 1.5x on mobile (e.g., -100px becomes -150px)
+              yPos = `-${Math.round(yValue * 1.5)}px`;
+            }
           }
           
           return {
             x: xPos,
-            y: link.y,
+            y: yPos,
             angle: link.angle,
           };
         });
@@ -142,7 +165,7 @@ export default function SocialLinksGravity() {
                 href={link.url}
                 target={link.url.startsWith("http") ? "_blank" : "_self"}
                 rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="text-lg sm:text-xl md:text-2xl bg-[#EEEEEE] dark:bg-[#222222] text-[#5C5C48] dark:text-[#C0C0C0] border border-[#5C5C48] dark:border-[#C0C0C0] rounded-full hover:cursor-pointer hover:bg-[#5C5C48] dark:hover:bg-[#C0C0C0] hover:text-white dark:hover:text-[#222222] px-6 py-3 md:px-9 md:py-5 pointer-events-auto transition-colors duration-200 whitespace-nowrap shadow-sm"
+                className="text-lg sm:text-xl md:text-2xl bg-[#EEEEEE] dark:bg-[#222222] text-[#5C5C48] dark:text-[#C0C0C0] border border-[#5C5C48] dark:border-[#505050] rounded-full hover:cursor-pointer hover:bg-[#5C5C48] dark:hover:bg-[#505050] hover:text-white dark:hover:text-[#222222] px-6 py-3 md:px-9 md:py-5 pointer-events-auto transition-colors duration-200 whitespace-nowrap shadow-sm"
                 whileTap={{ scale: 0.9 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

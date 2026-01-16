@@ -290,7 +290,7 @@ export function MatterBody({
     // Touch handlers for mobile
     const handleTouchStart = (e: TouchEvent) => {
       if (!isDraggable || !elementRef.current) return;
-      e.preventDefault();
+      // Don't prevent default immediately - allow link clicks to work
       const touch = e.touches[0];
       isDraggingRef.current = true;
       hasDraggedRef.current = false;
@@ -304,7 +304,6 @@ export function MatterBody({
       
       handlersRef.current.touchMove = (e: TouchEvent) => {
         if (!isDraggingRef.current || !elementRef.current) return;
-        e.preventDefault();
         const touch = e.touches[0];
         
         const now = performance.now();
@@ -313,6 +312,13 @@ export function MatterBody({
         const deltaY = touch.clientY - mouseStartRef.current.y;
         const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         dragDistanceRef.current = distance;
+        
+        // Only prevent default if we've actually started dragging (moved more than 10px)
+        // This allows taps to work normally
+        if (distance > 10) {
+          e.preventDefault();
+          hasDraggedRef.current = true;
+        }
         
         // Calculate velocity based on recent movement
         if (deltaTime > 0 && deltaTime < 0.1) { // Only calculate if time delta is reasonable
@@ -326,13 +332,11 @@ export function MatterBody({
           dragVelocityRef.current.y = dragVelocityRef.current.y * 0.5 + instantVelY * 0.5;
         }
         
-        // Consider it a drag if moved more than 5 pixels
-        if (distance > 5) {
-          hasDraggedRef.current = true;
+        // Update position if dragging
+        if (hasDraggedRef.current) {
+          positionRef.current.x = dragStartRef.current.x + deltaX;
+          positionRef.current.y = dragStartRef.current.y + deltaY;
         }
-        
-        positionRef.current.x = dragStartRef.current.x + deltaX;
-        positionRef.current.y = dragStartRef.current.y + deltaY;
         
         lastMousePosRef.current = { x: touch.clientX, y: touch.clientY };
         lastMouseTimeRef.current = now;
@@ -344,7 +348,7 @@ export function MatterBody({
         isDraggingRef.current = false;
         
         // Apply momentum from drag velocity
-        if (wasDragging && dragDistanceRef.current > 5) {
+        if (wasDragging && dragDistanceRef.current > 10) {
           // The drag velocity is in pixels per second
           // Convert to pixels per frame (assuming ~60fps)
           // Use a smaller multiplier to reduce momentum
@@ -352,6 +356,29 @@ export function MatterBody({
           const momentumMultiplier = 0.4; // Reduced momentum for more control
           velocityRef.current.x = (dragVelocityRef.current.x / fps) * momentumMultiplier;
           velocityRef.current.y = (dragVelocityRef.current.y / fps) * momentumMultiplier;
+        }
+        
+        // If we didn't drag, trigger link navigation for mobile
+        // On mobile, touch events don't always trigger click events, so we handle it manually
+        if (!wasDragging && elementRef.current && dragDistanceRef.current <= 10) {
+          const linkElement = elementRef.current.querySelector('a');
+          if (linkElement) {
+            const href = linkElement.getAttribute('href');
+            const target = linkElement.getAttribute('target');
+            if (href) {
+              // Small delay to ensure touch events have settled
+              setTimeout(() => {
+                // Only navigate if we didn't drag
+                if (!linkElement.getAttribute('data-dragged')) {
+                  if (target === '_blank') {
+                    window.open(href, '_blank', 'noopener,noreferrer');
+                  } else {
+                    window.location.href = href;
+                  }
+                }
+              }, 50);
+            }
+          }
         }
         
         // Prevent click if we dragged
@@ -392,7 +419,7 @@ export function MatterBody({
       };
       
       if (handlersRef.current.touchMove) {
-        document.addEventListener("touchmove", handlersRef.current.touchMove);
+        document.addEventListener("touchmove", handlersRef.current.touchMove, { passive: false });
       }
       if (handlersRef.current.touchEnd) {
         document.addEventListener("touchend", handlersRef.current.touchEnd);

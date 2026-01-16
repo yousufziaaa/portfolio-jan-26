@@ -30,19 +30,21 @@ export function TextHighlighter({
   const backgroundColor = highlightColor || "var(--highlight)";
 
   return (
-    <span ref={ref} className="relative inline-block">
-      <motion.span
-        className={`absolute inset-0 ${className}`}
-        style={{
-          backgroundColor: backgroundColor,
-          zIndex: -1,
-          transformOrigin: "left",
-        }}
-        initial={{ scaleX: 0 }}
-        animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-        transition={transition}
-      />
-      <span className="relative z-0">{children}</span>
-    </span>
+    <motion.span 
+      ref={ref} 
+      className={`relative inline ${className}`}
+      style={{
+        backgroundImage: `linear-gradient(${backgroundColor}, ${backgroundColor})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "0 0",
+        boxDecorationBreak: "clone",
+        WebkitBoxDecorationBreak: "clone",
+      }}
+      initial={{ backgroundSize: "0% 100%" }}
+      animate={isInView ? { backgroundSize: "100% 100%" } : { backgroundSize: "0% 100%" }}
+      transition={transition}
+    >
+      {children}
+    </motion.span>
   );
 }

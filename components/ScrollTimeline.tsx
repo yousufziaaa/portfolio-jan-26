@@ -123,10 +123,10 @@ export default function ScrollTimeline() {
 
   // Calculate bar positions - each bar should be centered where the box will be
   // Bars are evenly distributed with tighter spacing (using 20-80% range instead of 0-100%)
-  const getBarPosition = (index: number) => {
+  const getBarPosition = (index: number, isHorizontal: boolean = false) => {
     if (segments === 1) return 50; // Center if only one segment
-    const startPercent = 20; // Start at 20% from top
-    const endPercent = 80; // End at 80% from top
+    const startPercent = 20; // Start at 20%
+    const endPercent = 80; // End at 80%
     const range = endPercent - startPercent;
     return startPercent + (index / (segments - 1)) * range;
   };
@@ -137,6 +137,12 @@ export default function ScrollTimeline() {
     ? getBarPosition(activeSectionIndex)
     : 50;
   const boxTop = boxCenter - segmentHeight / 2;
+  
+  // For horizontal (mobile) layout
+  const boxLeft = segments > 1 
+    ? getBarPosition(activeSectionIndex, true)
+    : 50;
+  const boxLeftStart = boxLeft - segmentHeight / 2;
 
   const handleBarClick = (index: number) => {
     // Find sections dynamically to ensure we have the latest references
@@ -183,59 +189,126 @@ export default function ScrollTimeline() {
   };
 
   return (
-    <div className="fixed right-8 top-1/2 -translate-y-1/2 hidden lg:block z-10">
-      <div className="relative w-12 h-[400px]">
-        {/* Timeline lines - positioned at exact centers */}
-        <div className="absolute inset-0">
-          {Array.from({ length: segments }).map((_, index) => {
-            const barPosition = getBarPosition(index);
-            return (
-              <div
-                key={index}
-                className="absolute left-1/2 cursor-pointer flex items-center justify-center"
-                style={{
-                  top: `${barPosition}%`,
-                  transform: 'translate(-50%, -50%)',
-                  width: '48px', // Larger hover target
-                  height: '24px', // Larger hover target
-                }}
-                onClick={() => handleBarClick(index)}
-              >
-                {/* The actual bar - scales on hover but stays centered */}
-                <motion.div
-                  className="w-8 h-px"
-                  style={{ 
-                    backgroundColor: "#C0C0C0",
-                    transformOrigin: 'center' 
+    <>
+      {/* Mobile horizontal timeline - at top, aligned with theme toggle */}
+      <div className="fixed top-0 left-0 right-0 lg:hidden z-[100] px-6 bg-[var(--background)] py-6">
+        <div className="relative h-6 w-full max-w-full mx-auto">
+          {/* Timeline lines - positioned at exact centers (vertical bars) - centered on page */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {Array.from({ length: segments }).map((_, index) => {
+              const barPosition = getBarPosition(index, true);
+              return (
+                <div
+                  key={index}
+                  className="absolute top-1/2 cursor-pointer flex items-center justify-center"
+                  style={{
+                    left: `${barPosition}%`,
+                    transform: 'translate(-50%, -50%)',
+                    width: '24px', // Larger hover target
+                    height: '32px', // Larger hover target
                   }}
-                  whileHover={{ scale: 1.25 }}
-                  transition={{ duration: 0.2 }}
-                />
-              </div>
-            );
-          })}
-        </div>
+                  onClick={() => handleBarClick(index)}
+                >
+                  {/* The actual bar - vertical with modern styling */}
+                  <motion.div
+                    className="h-6 w-0.5 rounded-full"
+                    style={{ 
+                      backgroundColor: "var(--timeline-bar)",
+                      opacity: 0.4,
+                      transformOrigin: 'center' 
+                    }}
+                    whileHover={{ 
+                      scale: 1.5,
+                      opacity: 0.8,
+                    }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                  />
+                </div>
+              );
+            })}
+          </div>
 
-        {/* Moving box indicator */}
-        <motion.div
-          className="absolute left-0 w-12 pointer-events-none"
-          style={{
-            height: `${segmentHeight}%`,
-            top: `${boxTop}%`,
-            backgroundColor: "var(--background)",
-            border: "1px solid #C0C0C0",
-          }}
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: isVisible ? 1 : 0,
-            top: `${boxTop}%`,
-          }}
-          transition={{
-            top: { duration: 0.2, ease: "easeOut" },
-            opacity: { duration: 0.3 },
-          }}
-        />
+          {/* Moving circle indicator - centered on active bar */}
+          <motion.div
+            className="absolute top-1/2 pointer-events-none rounded-full"
+            style={{
+              width: '12px', // 50% of bar height (h-6 = 24px)
+              height: '12px',
+              left: `${boxLeft}%`,
+              transform: 'translate(-50%, -50%)',
+              backgroundColor: "var(--timeline-bar)",
+            }}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: isVisible ? 1 : 0,
+              left: `${boxLeft}%`,
+            }}
+            transition={{
+              left: { duration: 0.2, ease: "easeOut" },
+              opacity: { duration: 0.3 },
+            }}
+          />
+        </div>
       </div>
-    </div>
+
+      {/* Desktop vertical timeline - on right side */}
+      <div className="fixed right-8 top-1/2 -translate-y-1/2 hidden lg:block z-[100]">
+        <div className="relative w-12 h-[400px]">
+          {/* Timeline lines - positioned at exact centers */}
+          <div className="absolute inset-0">
+            {Array.from({ length: segments }).map((_, index) => {
+              const barPosition = getBarPosition(index);
+              return (
+                <div
+                  key={index}
+                  className="absolute left-1/2 cursor-pointer flex items-center justify-center"
+                  style={{
+                    top: `${barPosition}%`,
+                    transform: 'translate(-50%, -50%)',
+                    width: '48px', // Larger hover target
+                    height: '24px', // Larger hover target
+                  }}
+                  onClick={() => handleBarClick(index)}
+                >
+                  {/* The actual bar - modern styling */}
+                  <motion.div
+                    className="w-8 h-0.5 rounded-full"
+                    style={{ 
+                      backgroundColor: "var(--timeline-bar)",
+                      opacity: 0.4,
+                      transformOrigin: 'center' 
+                    }}
+                    whileHover={{ 
+                      scale: 1.5,
+                      opacity: 0.8,
+                    }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Moving box indicator - modern rounded */}
+          <motion.div
+            className="absolute left-0 w-12 pointer-events-none rounded-full"
+            style={{
+              height: `${segmentHeight * 0.8}%`,
+              top: `${boxTop + (segmentHeight * 0.1)}%`,
+              backgroundColor: "var(--timeline-bar)",
+            }}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: isVisible ? 1 : 0,
+              top: `${boxTop + (segmentHeight * 0.1)}%`,
+            }}
+            transition={{
+              top: { duration: 0.2, ease: "easeOut" },
+              opacity: { duration: 0.3 },
+            }}
+          />
+        </div>
+      </div>
+    </>
   );
 }

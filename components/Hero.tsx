@@ -80,14 +80,7 @@ export default function Hero() {
             transition={{ type: "spring", duration: 1, delay: 0.4, bounce: 0 } as Transition}
             useInViewOptions={{ once: true, initial: true, amount: 0.1 }}
           >
-            the climbing gym, cooking for my friends, or watching a
-          </TextHighlighter>{" "}
-          <TextHighlighter
-            className="rounded-[0.3em] px-px"
-            transition={{ type: "spring", duration: 1, delay: 0.4, bounce: 0 } as Transition}
-            useInViewOptions={{ once: true, initial: true, amount: 0.1 }}
-          >
-            movie
+            the climbing gym, cooking for my friends, or watching a movie
           </TextHighlighter>
           .
         </motion.p>

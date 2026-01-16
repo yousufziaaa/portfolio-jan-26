@@ -225,7 +225,7 @@ export default function HoverableTextWithImage({
                     wordRefs.current[wordIndex] = el;
                   }
                 }}
-                className="inline-block cursor-pointer"
+                className="inline cursor-pointer"
                 onMouseEnter={lineInfo ? handleLineMouseEnter : undefined}
                 onMouseMove={lineInfo ? handleLineMouseMove : undefined}
                 onMouseLeave={lineInfo ? handleLineMouseLeave : undefined}
@@ -285,7 +285,7 @@ export default function HoverableTextWithImage({
                 wordRefs.current[wordIndex] = el;
               }
             }}
-            className="inline-block"
+            className="inline"
           >
             {word}
           </span>
