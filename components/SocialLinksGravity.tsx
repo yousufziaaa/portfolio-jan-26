@@ -39,11 +39,17 @@ export default function SocialLinksGravity() {
           let xPos: string;
           
           if (isMobile) {
-            // On mobile, distribute all pills evenly across the viewport width
-            const padding = 24; // 24px padding on each side (6 * 4 = 24px)
+            // On mobile, distribute all pills evenly from left edge to right edge
+            const padding = 16; // Minimal padding on edges
             const availableWidth = viewportWidth - (padding * 2);
-            const spacing = availableWidth / (socialLinks.length + 1);
-            xPos = `${padding + spacing * (index + 1)}px`;
+            // Evenly space pills across the full width
+            // First pill at padding, last pill at viewportWidth - padding
+            if (socialLinks.length === 1) {
+              xPos = `${viewportWidth / 2}px`; // Center if only one
+            } else {
+              const spacing = availableWidth / (socialLinks.length - 1);
+              xPos = `${padding + spacing * index}px`;
+            }
           } else {
             // On desktop, use original left/right distribution
             if (link.x === "left") {
