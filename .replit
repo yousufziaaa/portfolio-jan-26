@@ -1,0 +1,10 @@
+run = "npm start"
+entrypoint = "package.json"
+
+[nix]
+channel = "stable-22_11"
+
+[deployment]
+build = ["sh", "-c", "npm install --legacy-peer-deps && npm run build"]
+run = ["npm", "start"]
+deploymentTarget = "cloudrun"
