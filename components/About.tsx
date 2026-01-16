@@ -40,7 +40,7 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          I appreciate you taking the time to have a gander at my little corner of the internet :){"\n\n"}To introduce myself, I'm Yousuf, a (soon to be) engineer graduating from the University of Waterloo in April 2026. I've been designing since 2019, though the good stuff only really started in 2022.{"\n\n"}I've had the immense privilege of working at some of the most incredible companies, surrounded by some of the most talented people. And although the world of design takes up most of my waking (and sleeping) hours, that's not all there is to me.
+          I appreciate you taking the time to have a gander at my little corner of the internet :){"\n\n"}To introduce myself, I&apos;m Yousuf, a (soon to be) engineer graduating from the University of Waterloo in April 2026. I&apos;ve been designing since 2019, though the good stuff only really started in 2022.{"\n\n"}I&apos;ve had the immense privilege of working at some of the most incredible companies, surrounded by some of the most talented people. And although the world of design takes up most of my waking (and sleeping) hours, that&apos;s not all there is to me.
         </motion.p>
         <motion.p
           className="mb-0 whitespace-break-spaces mt-4"
@@ -49,32 +49,32 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          Outside of Figma, you'll likely find me{" "}
+          Outside of Figma, you&apos;ll likely find me{" "}
           <span style={{ color: "var(--accent)" }}>
             <HoverableTextWithImage
               text="cheffing something up in the kitchen"
-              imageUrl="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=200&h=200&fit=crop"
+              imageUrl="/kitchen.JPG"
             />
           </span>
           , or{" "}
           <span style={{ color: "var(--accent)" }}>
             <HoverableTextWithImage
               text="playing board games with friends"
-              imageUrl="https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=200&h=200&fit=crop"
+              imageUrl="/board-games.JPG"
             />
           </span>
           . If that doesn't cut it, I'll probably be out{" "}
           <span style={{ color: "var(--accent)" }}>
             <HoverableTextWithImage
               text="taking some shots with my camera"
-              imageUrl="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=200&h=200&fit=crop"
+              imageUrl="/camera.JPG"
             />
           </span>
           {" "}or{" "}
           <span style={{ color: "var(--accent)" }}>
             <HoverableTextWithImage
               text="exploring a new country"
-              imageUrl="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=200&h=200&fit=crop"
+              imageUrl="/exploring.JPG"
             />
           </span>
           .

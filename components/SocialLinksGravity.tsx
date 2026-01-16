@@ -138,13 +138,14 @@ export default function SocialLinksGravity() {
               shouldAnimate={isVisible}
             >
               <motion.a
+                data-pill-id={link.name}
                 href={link.url}
                 target={link.url.startsWith("http") ? "_blank" : "_self"}
                 rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
                 className="text-lg sm:text-xl md:text-2xl bg-[#EEEEEE] dark:bg-[#222222] text-[#5C5C48] dark:text-[#C0C0C0] border border-[#5C5C48] dark:border-[#C0C0C0] rounded-full hover:cursor-pointer hover:bg-[#5C5C48] dark:hover:bg-[#C0C0C0] hover:text-white dark:hover:text-[#222222] px-6 py-3 md:px-9 md:py-5 pointer-events-auto transition-colors duration-200 whitespace-nowrap shadow-sm"
                 whileTap={{ scale: 0.9 }}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: isVisible ? 1 : 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
                 onClick={(e) => {
                   // Prevent navigation if the element was dragged

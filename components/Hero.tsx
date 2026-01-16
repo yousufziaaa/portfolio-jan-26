@@ -34,7 +34,7 @@ export default function Hero() {
             autoStart={false}
           />
           <ScrambleHover
-            text="I'm Yousuf"
+            text="I&apos;m Yousuf"
             scrambleSpeed={50}
             maxIterations={8}
             useOriginalCharsOnly={true}
@@ -48,7 +48,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          I've been designing for over 5 years, mainly focusing on product design for web and mobile.
+          I&apos;ve been designing for over 5 years, mainly focusing on product design for web and mobile.
         </motion.p>
         <motion.p
           className="mb-0 whitespace-break-spaces mt-4"
@@ -74,7 +74,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          Outside of my designer persona, you'll probably find me at{" "}
+          Outside of my designer persona, you&apos;ll probably find me at{" "}
           <TextHighlighter
             className="rounded-[0.3em] px-px"
             transition={{ type: "spring", duration: 1, delay: 0.4, bounce: 0 } as Transition}

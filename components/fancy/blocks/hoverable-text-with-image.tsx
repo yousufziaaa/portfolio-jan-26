@@ -34,7 +34,9 @@ export default function HoverableTextWithImage({
   useEffect(() => {
     springX.set(imagePosition.x);
     springY.set(imagePosition.y);
-  }, [imagePosition.x, imagePosition.y, springX, springY]);
+    // springX and springY are stable references from useSpring, but ESLint doesn't know that
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imagePosition.x, imagePosition.y]);
 
   // Detect line breaks by measuring word positions
   useEffect(() => {

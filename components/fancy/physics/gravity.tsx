@@ -443,7 +443,8 @@ export function MatterBody({
         document.removeEventListener("touchend", handlersRef.current.touchEnd);
       }
     };
-  }, [x, y, angle, matterBodyOptions, isAnimating, isDraggable, shouldAnimate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [x, y, angle, matterBodyOptions, isDraggable, shouldAnimate]);
 
   return (
     <div ref={elementRef} style={{ position: "absolute" }}>
