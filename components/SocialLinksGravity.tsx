@@ -14,7 +14,7 @@ interface SocialLink {
 
 // Social links positioned on left and right sides - spaced out vertically
 const socialLinks: SocialLink[] = [
-  { name: "LinkedIn", url: "https://linkedin.com/in/yousufziaaa", x: "left", y: "-100px", angle: -5 },
+  { name: "LinkedIn", url: "https://linkedin.com/in/zia-yousuf", x: "left", y: "-100px", angle: -5 },
   { name: "Twitter", url: "https://twitter.com/yousufziaaa", x: "right", y: "-200px", angle: 5 },
   { name: "GitHub", url: "https://github.com/yousufziaaa", x: "left", y: "-300px", angle: 3 },
   { name: "Research", url: "https://pubmed.ncbi.nlm.nih.gov/?term=Islam+YZ&cauthor_id=41027339", x: "right", y: "-400px", angle: -3 },
