@@ -19,7 +19,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero" className="pt-16 md:pt-24 pb-8 md:pb-12">
+    <section id="hero" className="pt-[96px] md:pt-24 pb-8 md:pb-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

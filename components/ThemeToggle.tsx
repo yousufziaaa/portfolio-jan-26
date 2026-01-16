@@ -102,7 +102,7 @@ export default function ThemeToggle() {
   return (
     <motion.button
       onClick={toggleTheme}
-      className="fixed top-6 right-6 lg:top-6 lg:right-[44px] w-6 h-6 flex items-center justify-center focus:outline-none rounded-full z-[100]"
+      className="fixed top-7 right-6 lg:top-6 lg:right-[44px] w-4 h-4 lg:w-6 lg:h-6 flex items-center justify-center focus:outline-none rounded-full z-[100]"
       aria-label="Toggle dark mode"
       whileHover={{ scale: 1.1 }}
       whileTap={{ 
@@ -118,11 +118,12 @@ export default function ThemeToggle() {
     >
       {isDark ? (
         <svg
-          className="w-6 h-6"
+          className="w-4 h-4 lg:w-6 lg:h-6"
           fill="none"
-          stroke="var(--foreground)"
+          stroke="var(--timeline-bar)"
           strokeWidth="1.5"
           viewBox="0 0 24 24"
+          style={{ opacity: 0.4 }}
         >
           <path
             strokeLinecap="round"
@@ -132,11 +133,12 @@ export default function ThemeToggle() {
         </svg>
       ) : (
         <svg
-          className="w-6 h-6"
+          className="w-4 h-4 lg:w-6 lg:h-6"
           fill="none"
-          stroke="var(--foreground)"
+          stroke="var(--timeline-bar)"
           strokeWidth="1.5"
           viewBox="0 0 24 24"
+          style={{ opacity: 0.7 }}
         >
           <path
             strokeLinecap="round"

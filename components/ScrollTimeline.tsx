@@ -211,7 +211,7 @@ export default function ScrollTimeline() {
                 >
                   {/* The actual bar - vertical with modern styling */}
                   <motion.div
-                    className="h-6 w-0.5 rounded-full"
+                    className="h-3 w-0.5 rounded-full"
                     style={{ 
                       backgroundColor: "var(--timeline-bar)",
                       opacity: 0.4,
@@ -232,7 +232,7 @@ export default function ScrollTimeline() {
           <motion.div
             className="absolute top-1/2 pointer-events-none rounded-full"
             style={{
-              width: '12px', // 50% of bar height (h-6 = 24px)
+              width: '12px', // Same height as bar (h-3 = 12px)
               height: '12px',
               left: `${boxLeft}%`,
               transform: 'translate(-50%, -50%)',
