@@ -26,12 +26,21 @@ export default function ProjectPage({
 
   // Build TOC items
   const tocItems = [
-    { id: "preface", title: "Preface", level: 1 },
-    ...project.sections.map((section) => ({
-      id: section.id,
-      title: section.title,
-      level: section.level,
-    })),
+    ...(project.preface && project.preface.length > 0
+      ? [{ id: "preface", title: "Preface", level: 1 }]
+      : []),
+    ...project.sections.flatMap((section) => [
+      {
+        id: section.id,
+        title: section.title,
+        level: section.level,
+      },
+      ...(section.subsections || []).map((subsection) => ({
+        id: subsection.id,
+        title: subsection.title,
+        level: section.level + 1,
+      })),
+    ]),
     ...(project.conclusion
       ? [{ id: "conclusion", title: "Conclusion", level: 1 }]
       : []),
@@ -73,36 +82,51 @@ export default function ProjectPage({
         </header>
 
         {/* Preface */}
-        <section id="preface" className="mb-12">
-          {project.preface.map((paragraph, index) => (
-            <p
-              key={index}
-              className="mb-4"
-              style={{ 
-                fontSize: "16px",
-                color: "var(--foreground)", 
-                lineHeight: "1.6",
-                fontFamily: "var(--font-neue-machina)"
-              }}
-            >
-              {paragraph}
-            </p>
-          ))}
-        </section>
+        {project.preface && project.preface.length > 0 && (
+          <section id="preface" className="mb-12">
+            {project.preface.map((paragraph, index) => (
+              <p
+                key={index}
+                className="mb-4"
+                style={{ 
+                  fontSize: "16px",
+                  color: "var(--foreground)", 
+                  lineHeight: "1.6",
+                  fontFamily: "var(--font-neue-machina)"
+                }}
+              >
+                {paragraph}
+              </p>
+            ))}
+          </section>
+        )}
 
         {/* Sections */}
         {project.sections.map((section) => (
           <section key={section.id} id={section.id} className="mb-12 scroll-mt-24">
-            <h2
-              className="font-departure-mono mb-6"
-              style={{
-                fontSize: "18px",
-                fontWeight: "400",
-                color: "var(--header)",
-              }}
-            >
-              {section.title}
-            </h2>
+            {section.level === 2 ? (
+              <h3
+                className="font-departure-mono mb-3"
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "400",
+                  color: "var(--header)",
+                }}
+              >
+                {section.title}
+              </h3>
+            ) : (
+              <h2
+                className="font-departure-mono mb-6"
+                style={{
+                  fontSize: "18px",
+                  fontWeight: "400",
+                  color: "var(--header)",
+                }}
+              >
+                {section.title}
+              </h2>
+            )}
             {section.content.map((paragraph, index) => (
               <p
                 key={index}
@@ -116,6 +140,54 @@ export default function ProjectPage({
               >
                 {paragraph}
               </p>
+            ))}
+            {section.subsections && section.subsections.map((subsection) => (
+              <div key={subsection.id} id={subsection.id} className="mb-8 scroll-mt-24">
+                <h3
+                  className="font-departure-mono mb-3"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    color: "var(--header)",
+                  }}
+                >
+                  {subsection.title}
+                </h3>
+                {subsection.content.map((paragraph, index) => (
+                  <p
+                    key={index}
+                    className="mb-4"
+                    style={{ 
+                      fontSize: "16px",
+                      color: "var(--foreground)", 
+                      lineHeight: "1.6",
+                      fontFamily: "var(--font-neue-machina)"
+                    }}
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+                {subsection.images && subsection.images.length > 0 && (
+                  <div className="mt-8 space-y-6">
+                    {subsection.images.map((image, index) => (
+                      <div
+                        key={index}
+                        className="relative w-full rounded-lg overflow-hidden"
+                        style={{ backgroundColor: "var(--background)" }}
+                      >
+                        <Image
+                          src={image}
+                          alt={`${subsection.title} image ${index + 1}`}
+                          width={1200}
+                          height={675}
+                          className="w-full h-auto"
+                          style={{ objectFit: "contain" }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
             {section.images && section.images.length > 0 && (
               <div className="mt-8 space-y-6">

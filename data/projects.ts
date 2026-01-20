@@ -1,8 +1,16 @@
+export type ProjectSubsection = {
+  id: string;
+  title: string;
+  content: string[];
+  images?: string[];
+};
+
 export type ProjectSection = {
   id: string;
   title: string;
   level: number;
   content: string[];
+  subsections?: ProjectSubsection[];
   images?: string[];
 };
 
@@ -204,26 +212,129 @@ export const projectContents: Record<string, ProjectContent> = {
   phia: {
     title: "Phia",
     dateRange: "Sep '25 - Dec '25",
-    preface: [
-      "Phia is an innovative platform focused on creating intuitive user experiences. This project involved building scalable design systems and user interfaces.",
-    ],
+    preface: [],
     sections: [
       {
-        id: "project-goal",
-        title: "Project Goal",
-        level: 2,
+        id: "overview",
+        title: "Overview",
+        level: 1,
         content: [
-          "Create a design system and user interfaces that scale with the platform's growth.",
+          "From September to December 2025, I worked as a Growth Design Intern at Phia, a fashion discovery iOS browser extension. I focused on three key growth levers: reducing extension churn, increasing user activation, and driving monetization. Through iterative design, A/B testing, and data-driven insights, I redesigned core user journeys and established a cohesive design language that evolved to define the entire product experience.",
         ],
       },
       {
-        id: "design-approach",
-        title: "Design Approach",
-        level: 2,
-        content: [
-          "Emphasized clean, modern design with a focus on user experience and accessibility.",
+        id: "onboarding-redesign",
+        title: "Onboarding Redesign",
+        level: 1,
+        content: [],
+        subsections: [
+          {
+            id: "the-challenge",
+            title: "The Challenge",
+            content: [
+              "Phia's onboarding flow wasn't converting users effectively. Without a clear design system or cohesive visual language, the experience felt disjointed and failed to set proper expectations for the extension's value.",
+            ],
+          },
+          {
+            id: "research-discovery",
+            title: "Research & Discovery",
+            content: [
+              "I began by auditing competitor iOS browser extensions, analyzing what made their onboarding experiences successful or unsuccessful. Key patterns emerged:",
+              "Progress indicators (breadcrumbs) reduced abandonment by showing users where they were in the flow",
+              "Early personalization increased engagement and relevance",
+              "Copy optimization significantly improved click-through rates",
+            ],
+            images: ["/phia-hero.png"],
+          },
+          {
+            id: "design-process",
+            title: "Design Process",
+            content: [
+              "I approached the redesign in two phases:",
+              "Quick wins — Reskinned the existing flow with improved copy, progress indicators, and minor UX refinements",
+              "Full redesign — Built a completely reimagined experience with personalization, updated styling, and a cohesive visual language",
+            ],
+            images: ["/phia-hero.png"],
+          },
+          {
+            id: "iteration-tension",
+            title: "Iteration & Tension",
+            content: [
+              "High-impact screens went through dozens of iterations as I navigated a tension between the founders' desire for flashy marketing moments and creating the best possible user experience. Without an existing design system, each iteration began to diverge visually, creating inconsistency with the rest of the app.",
+              "This challenge became an opportunity: I developed a new design language during the onboarding work that eventually became the foundation for the entire product. New patterns for typography, color usage, component styling, and interaction design emerged organically and were systematically applied across Phia.",
+            ],
+            images: ["/phia-hero.png"],
+          },
         ],
-        images: ["/phia-hero.png"],
+      },
+      {
+        id: "activation-optimization",
+        title: "Activation Optimization",
+        level: 1,
+        content: [],
+        subsections: [
+          {
+            id: "the-problem",
+            title: "The Problem",
+            content: [
+              "After completing onboarding, users were directed to Safari to activate the extension—but activation rates were concerningly low. Many users exited prematurely or failed to activate correctly, creating a critical drop-off point in the user journey.",
+            ],
+          },
+          {
+            id: "investigation",
+            title: "Investigation",
+            content: [
+              "Through A/B testing and PostHog session recordings, I identified the core issue: users were confused during Apple's system modals and frequently selected the wrong option, preventing successful activation.",
+              "Since we couldn't modify Apple's native modals, the solution had to come from improved preparation—clearer copy and better visual guidance on the activation screen itself.",
+            ],
+            images: ["/phia-hero.png"],
+          },
+          {
+            id: "design-testing",
+            title: "Design & Testing",
+            content: [
+              "Activation became a P0 priority across the company. I ran weekly experiments, testing:",
+              "Different copy approaches to set clear expectations",
+              "Visual guides showing exactly what to tap",
+              "Step-by-step instructions vs. single-screen explanations",
+              "Edge case handling for incorrect inputs and session timeouts",
+              "Each iteration was informed by data, and we systematically improved activation rates by making the required user actions crystal clear before they entered Safari.",
+            ],
+            images: ["/phia-hero.png", "/phia-hero.png"],
+          },
+        ],
+      },
+      {
+        id: "monetization-new-features",
+        title: "Monetization & New Features",
+        level: 1,
+        content: [],
+        subsections: [
+          {
+            id: "style-passport",
+            title: "Style Passport",
+            content: [
+              "I designed \"Style Passport,\" a comprehensive feature aimed at increasing engagement and shareability while driving monetization. The feature combined three elements:",
+              "Style Profile — An AI-powered analysis of the user's fashion preferences and aesthetic, surfacing personalized insights",
+              "Outfit Gallery — A space for users to upload and curate their outfits, with social sharing built in to increase virality",
+              "Shopping Profile — A year-round \"Spotify Wrapped\" experience showing users their shopping patterns, favorite brands, spending insights, and style evolution",
+              "The goal was to create a shareable, engaging feature that would increase user retention while creating natural upsell opportunities for premium features.",
+            ],
+            images: ["/phia-hero.png", "/phia-hero.png"],
+          },
+        ],
+      },
+      {
+        id: "additional-work",
+        title: "Additional Work",
+        level: 1,
+        content: [
+          "Beyond these core projects, I contributed across multiple touchpoints:",
+          "Onboarding animations — Created motion design for key onboarding moments to increase delight and clarity",
+          "App Store optimization — Redesigned all App Store screenshots to improve conversion from store page to install",
+          "Growth features — Designed referral flows, email campaign templates, and other retention-focused features",
+        ],
+        images: ["/phia-hero.png", "/phia-hero.png", "/phia-hero.png"],
       },
     ],
   },
