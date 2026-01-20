@@ -123,7 +123,7 @@ export default function ThemeToggle() {
           stroke="var(--timeline-bar)"
           strokeWidth="1.5"
           viewBox="0 0 24 24"
-          style={{ opacity: 0.4 }}
+          style={{ opacity: 0.9 }}
         >
           <path
             strokeLinecap="round"

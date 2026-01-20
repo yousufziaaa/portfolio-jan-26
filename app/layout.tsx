@@ -3,12 +3,12 @@ import "./globals.css";
 import { departureMono, neueMachina } from "./fonts";
 
 export const metadata: Metadata = {
-  title: "Portfolio | Your Name",
+  title: "Yousuf's Portfolio",
   description: "Modern portfolio website showcasing creative design and development work",
   keywords: ["portfolio", "design", "development", "web design", "UI/UX"],
-  authors: [{ name: "Your Name" }],
+  authors: [{ name: "Yousuf" }],
   openGraph: {
-    title: "Portfolio | Your Name",
+    title: "Yousuf's Portfolio",
     description: "Modern portfolio website showcasing creative design and development work",
     type: "website",
   },
