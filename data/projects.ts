@@ -121,6 +121,7 @@ export const projectContents: Record<string, ProjectContent> = {
           "GroqCloud's rapid growth had led to inconsistent UI patterns across the platform. Colors were duplicated under different naming conventions, components had multiple implementations, and there was no single source of truth for design decisions. The engineering team needed a system that would accelerate development while ensuring visual consistency.",
           "I broke the design system into two phases: Foundations — Colors, typography, icons, spacing, and elevation; and Components — Reusable UI elements from buttons to complex inputs.",
         ],
+        images: ["/groq-0.png"],
       },
       {
         id: "foundations",
@@ -133,7 +134,7 @@ export const projectContents: Record<string, ProjectContent> = {
           "Using Tailwind as the framework, I defined text styles split between body and headings, with each style following a text-type-size convention (e.g., text-body-small, text-heading-large). Size, weight, line-height, and tracking were all standardized within this system.",
           "Icons were sourced from the Lucide library, and spacing utilized a consistent scale based on rem units (1 rem = 16px) with tokens like $spacing-04 and $spacing-06.",
         ],
-        images: ["/groq-hero.png"],
+        images: ["/groq-1.png"],
       },
       {
         id: "components",
@@ -145,7 +146,7 @@ export const projectContents: Record<string, ProjectContent> = {
           "button-primary, button-secondary, button-ghost",
           "button-dropdown, button-pill, button-outline, button-split",
         ],
-        images: ["/groq-hero.png"],
+        images: ["/groq-2.png"],
       },
       {
         id: "impact",
@@ -170,7 +171,7 @@ export const projectContents: Record<string, ProjectContent> = {
         content: [
           "Designed an iterative evolution from card-based layouts to a streamlined list-based interface for managing LoRA fine-tuned models, improving information density and scanning efficiency.",
         ],
-        images: ["/groq-hero.png"],
+        images: ["/groq-3.png"],
       },
       {
         id: "usage-dashboard",
@@ -179,7 +180,7 @@ export const projectContents: Record<string, ProjectContent> = {
         content: [
           "Created a comprehensive dashboard for monitoring API usage statistics, costs, and analytics, giving users clear visibility into their GroqCloud consumption.",
         ],
-        images: ["/groq-hero.png"],
+        images: ["/groq-4.png"],
       },
       {
         id: "documentation-search",
@@ -188,7 +189,7 @@ export const projectContents: Record<string, ProjectContent> = {
         content: [
           "Designed an AI-powered command palette for quick documentation access, integrating intelligent question-answering directly into the console workflow.",
         ],
-        images: ["/groq-hero.png"],
+        images: ["/groq-5.png"],
       },
       {
         id: "mobile-modal-optimization",
@@ -197,7 +198,7 @@ export const projectContents: Record<string, ProjectContent> = {
         content: [
           "Redesigned modal experiences for mobile devices, ensuring responsive layouts that maintained usability across screen sizes.",
         ],
-        images: ["/groq-hero.png"],
+        images: ["/groq-6.png"],
       },
       {
         id: "direct-code-contributions",
@@ -244,7 +245,7 @@ export const projectContents: Record<string, ProjectContent> = {
               "Early personalization increased engagement and relevance",
               "Copy optimization significantly improved click-through rates",
             ],
-            images: ["/phia-hero.png"],
+            images: ["/phia-1.png"],
           },
           {
             id: "design-process",
@@ -254,7 +255,7 @@ export const projectContents: Record<string, ProjectContent> = {
               "Quick wins — Reskinned the existing flow with improved copy, progress indicators, and minor UX refinements",
               "Full redesign — Built a completely reimagined experience with personalization, updated styling, and a cohesive visual language",
             ],
-            images: ["/phia-hero.png"],
+            images: ["/phia-2.png"],
           },
           {
             id: "iteration-tension",
@@ -263,7 +264,7 @@ export const projectContents: Record<string, ProjectContent> = {
               "High-impact screens went through dozens of iterations as I navigated a tension between the founders' desire for flashy marketing moments and creating the best possible user experience. Without an existing design system, each iteration began to diverge visually, creating inconsistency with the rest of the app.",
               "This challenge became an opportunity: I developed a new design language during the onboarding work that eventually became the foundation for the entire product. New patterns for typography, color usage, component styling, and interaction design emerged organically and were systematically applied across Phia.",
             ],
-            images: ["/phia-hero.png"],
+            images: ["/phia-3.png"],
           },
         ],
       },
@@ -287,7 +288,7 @@ export const projectContents: Record<string, ProjectContent> = {
               "Through A/B testing and PostHog session recordings, I identified the core issue: users were confused during Apple's system modals and frequently selected the wrong option, preventing successful activation.",
               "Since we couldn't modify Apple's native modals, the solution had to come from improved preparation—clearer copy and better visual guidance on the activation screen itself.",
             ],
-            images: ["/phia-hero.png"],
+            images: ["/phia-4.png"],
           },
           {
             id: "design-testing",
@@ -300,7 +301,7 @@ export const projectContents: Record<string, ProjectContent> = {
               "Edge case handling for incorrect inputs and session timeouts",
               "Each iteration was informed by data, and we systematically improved activation rates by making the required user actions crystal clear before they entered Safari.",
             ],
-            images: ["/phia-hero.png", "/phia-hero.png"],
+            images: ["/phia-5.png", "/phia-6.png"],
           },
         ],
       },
@@ -320,7 +321,7 @@ export const projectContents: Record<string, ProjectContent> = {
               "Shopping Profile — A year-round \"Spotify Wrapped\" experience showing users their shopping patterns, favorite brands, spending insights, and style evolution",
               "The goal was to create a shareable, engaging feature that would increase user retention while creating natural upsell opportunities for premium features.",
             ],
-            images: ["/phia-hero.png", "/phia-hero.png"],
+            images: ["/phia-7.png", "/phia-8.png"],
           },
         ],
       },
@@ -334,7 +335,7 @@ export const projectContents: Record<string, ProjectContent> = {
           "App Store optimization — Redesigned all App Store screenshots to improve conversion from store page to install",
           "Growth features — Designed referral flows, email campaign templates, and other retention-focused features",
         ],
-        images: ["/phia-hero.png", "/phia-hero.png", "/phia-hero.png"],
+        images: ["/phia-9.png", "/phia-10.png"],
       },
     ],
   },
@@ -342,25 +343,164 @@ export const projectContents: Record<string, ProjectContent> = {
     title: "Klarify",
     dateRange: "Sep '24 - Sep '25",
     preface: [
-      "Klarify is a web application designed to help users track and manage their daily tasks. The application features a clean, intuitive interface with a focus on productivity and user experience.",
+      "I joined Klarify in late 2024 as the sole designer on a rapidly scaling mental health AI platform. Over the course of a year, I designed every user-facing screen, established comprehensive brand guidelines, overhauled marketing materials, and built a scalable design system. Working directly with founders and engineers, I balanced the challenge of introducing AI to a traditionally tech-resistant audience while maintaining clarity and simplicity across complex therapeutic workflows.",
     ],
     sections: [
       {
-        id: "project-goal",
-        title: "Project Goal",
-        level: 2,
-        content: [
-          "Design a task management application that helps users stay organized and productive.",
+        id: "overview",
+        title: "Overview",
+        level: 1,
+        content: [],
+      },
+      {
+        id: "brand-web-design",
+        title: "Brand & Web Design",
+        level: 1,
+        content: [],
+        subsections: [
+          {
+            id: "the-challenge",
+            title: "The Challenge",
+            content: [
+              "Klarify needed a web presence that could communicate its expanding feature set while navigating a unique tension: positioning as an AI company in a field where many therapists were skeptical of the technology.",
+            ],
+          },
+          {
+            id: "website-v1",
+            title: "Website V1 — Finding Identity",
+            content: [
+              "The company was in a transitional phase, still defining its identity. I led the redesign focusing on clear value proposition communication and understanding the core audience. Through multiple iterations, we tested different sections and styles to find the right balance—showcasing AI capabilities without alienating traditional practitioners.",
+              "Once the design was finalized, I built and shipped the site in Framer.",
+            ],
+            images: ["/klarify-1.png"],
+          },
+          {
+            id: "website-v2",
+            title: "Website V2 — Current Version",
+            content: [
+              "In late 2025, I led a second iteration that refined the brand further. View the current site here.",
+            ],
+          },
         ],
       },
       {
-        id: "design-approach",
-        title: "Design Approach",
-        level: 2,
+        id: "marketing-brand-assets",
+        title: "Marketing & Brand Assets",
+        level: 1,
         content: [
-          "Created a minimal, distraction-free interface that puts tasks front and center.",
+          "As the brand evolved, I designed all public-facing materials to establish a cohesive visual language:",
         ],
-        images: ["/klarify-hero.png"],
+        subsections: [
+          {
+            id: "digital-advertising",
+            title: "Digital Advertising",
+            content: [
+              "LinkedIn banners and promotional graphics",
+              "YouTube video thumbnails and ad campaigns",
+              "Multi-platform ads designed across screen sizes",
+              "During this work, Klarify's color guidelines and design language crystallized—every asset followed a consistent structure that became the foundation for all future brand work.",
+            ],
+            images: ["/klarify-2.png", "/klarify-3.png"],
+          },
+          {
+            id: "conference-materials",
+            title: "Conference Materials",
+            content: [
+              "When Klarify sponsored one of North America's largest therapy conferences, I created a full suite of promotional designs including booth materials, handouts, and digital assets.",
+            ],
+            images: ["/klarify-4.png"],
+          },
+        ],
+      },
+      {
+        id: "platform-design",
+        title: "Platform Design",
+        level: 1,
+        content: [
+          "As the sole designer, I contributed to every feature and flow in the Klarify platform. Working autonomously with feedback loops from founders and engineering, I prioritized simplification—stripping away complexity to create intuitive experiences for therapists at all levels of tech proficiency.",
+        ],
+        subsections: [
+          {
+            id: "design-philosophy",
+            title: "Design Philosophy: Less is More",
+            content: [
+              "Each feature went through multiple iterations, progressively refining the experience month over month. Below are key projects that showcase the breadth of my work. (Reach out if you'd like to see more—I'm happy to walk through the full scope.)",
+            ],
+          },
+          {
+            id: "overview-page",
+            title: "Overview Page",
+            content: [
+              "The Overview Page was the command center for each therapy session. Therapists could access notes, client details, reflection questions, transcripts, and AI-generated insights—all while interacting with Bloomy, Klarify's built-in AI assistant.",
+              "Key actions included:",
+              "Creating and editing multiple note types and formats",
+              "Sharing notes with clients or colleagues",
+              "Asking Bloomy questions directly within the session context",
+              "The challenge was organizing dense information hierarchies while maintaining a clean, scannable interface that didn't overwhelm users.",
+            ],
+            images: ["/overview-1.png", "/overview-2.png", "/overview-3.png", "/overview-4.png"],
+          },
+          {
+            id: "record-page",
+            title: "Record Page",
+            content: [
+              "The Record Page served as the app's homepage—intentionally, since recording sessions was therapists' most frequent action. The design needed to balance two competing needs:",
+              "Displaying information — Showing past sessions and relevant history",
+              "Enabling action — Making it effortless to start recording via multiple methods",
+              "The recording flow itself was the most critical part of the entire platform. It went through numerous iterations to reduce friction and handle edge cases like interrupted recordings, background audio, and session metadata capture.",
+            ],
+            images: ["/record-1.png", "/record-2.png", "/record-3.png", "/record-4.png"],
+          },
+          {
+            id: "settings-billing",
+            title: "Settings & Billing",
+            content: [
+              "What began as a simple payment settings page evolved into a complex multi-role system once we introduced clinic support.",
+            ],
+          },
+          {
+            id: "the-complexity",
+            title: "The Complexity",
+            content: [
+              "User roles emerged—individual therapists, clinic administrators, billing managers—each with different permissions and capabilities. Administrators needed to:",
+              "Purchase and manage seat licenses",
+              "Reassign seats to different users",
+              "Update billing for specific seats",
+              "View clinic-wide usage and analytics",
+              "The flow went through countless iterations, guided by user research and real-world requirements from clinic partners. The final design balanced power-user functionality with clarity for less technical users.",
+            ],
+            images: ["/settings-1.png", "/settings-2.png", "/settings-3.png", "/settings-4.png"],
+          },
+          {
+            id: "klarifygpt",
+            title: "KlarifyGPT",
+            content: [
+              "Toward the end of my time at Klarify, I designed KlarifyGPT, the in-house AI assistant. This presented an opportunity to design for conversational AI while being mindful of our audience—including elderly therapists who weren't tech-savvy.",
+            ],
+            images: ["/gpt-1.png", "/gpt-2.png", "/gpt-3.png", "/gpt-4.png"],
+          },
+          {
+            id: "design-approach-klarifygpt",
+            title: "Design Approach",
+            content: [
+              "I opted for a lightweight interface with:",
+              "Clear, succinct explanations of AI capabilities",
+              "\"Quick Actions\" for common tasks to save time",
+              "Transparent AI responses with visible sourcing",
+              "Familiar patterns that didn't require learning new interaction models",
+              "The goal was making AI feel helpful rather than intimidating—a tool that enhanced their practice without adding cognitive load.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "design-system",
+        title: "Design System",
+        level: 1,
+        content: [
+          "Throughout all of this work, I built a comprehensive design system that unified the platform's visual language. Components, patterns, and guidelines scaled across all features, ensuring consistency as the product grew and making handoff to engineering seamless.",
+        ],
+        images: ["/design-system.png"],
       },
     ],
   },

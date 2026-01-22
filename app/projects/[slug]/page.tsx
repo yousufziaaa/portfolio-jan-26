@@ -3,6 +3,7 @@ import TableOfContents from "@/components/TableOfContents";
 import BackToTop from "@/components/BackToTop";
 import Image from "next/image";
 import Link from "next/link";
+import ParagraphWithLinks from "@/components/ParagraphWithLinks";
 
 export default function ProjectPage({
   params,
@@ -95,7 +96,7 @@ export default function ProjectPage({
                   fontFamily: "var(--font-neue-machina)"
                 }}
               >
-                {paragraph}
+                <ParagraphWithLinks text={paragraph} />
               </p>
             ))}
           </section>
@@ -138,7 +139,7 @@ export default function ProjectPage({
                   fontFamily: "var(--font-neue-machina)"
                 }}
               >
-                {paragraph}
+                <ParagraphWithLinks text={paragraph} />
               </p>
             ))}
             {section.subsections && section.subsections.map((subsection) => (
@@ -164,49 +165,107 @@ export default function ProjectPage({
                       fontFamily: "var(--font-neue-machina)"
                     }}
                   >
-                    {paragraph}
+                    <ParagraphWithLinks text={paragraph} />
                   </p>
                 ))}
                 {subsection.images && subsection.images.length > 0 && (
-                  <div className="mt-8 space-y-6">
-                    {subsection.images.map((image, index) => (
-                      <div
-                        key={index}
-                        className="relative w-full rounded-lg overflow-hidden"
-                        style={{ backgroundColor: "var(--background)" }}
-                      >
-                        <Image
-                          src={image}
-                          alt={`${subsection.title} image ${index + 1}`}
-                          width={1200}
-                          height={675}
-                          className="w-full h-auto"
-                          style={{ objectFit: "contain" }}
-                        />
-                      </div>
-                    ))}
+                  <div className={`mt-8 ${subsection.images.length === 4 ? 'relative grid grid-cols-2 gap-2 overflow-hidden' : 'space-y-6'}`}>
+                    {subsection.images.map((image, index) => {
+                      const getTransformOrigin = () => {
+                        if (index === 0) return 'top left';
+                        if (index === 1) return 'top right';
+                        if (index === 2) return 'bottom left';
+                        return 'bottom right';
+                      };
+                      const getPositionClasses = () => {
+                        if (index === 0) return 'hover:top-0 hover:left-0 hover:right-auto hover:bottom-auto';
+                        if (index === 1) return 'hover:top-0 hover:right-0 hover:left-auto hover:bottom-auto';
+                        if (index === 2) return 'hover:bottom-0 hover:left-0 hover:top-auto hover:right-auto';
+                        return 'hover:bottom-0 hover:right-0 hover:top-auto hover:left-auto';
+                      };
+                      const isGrid = subsection.images && subsection.images.length === 4;
+                      return (
+                        <div
+                          key={index}
+                          className={`relative w-full rounded-lg cursor-pointer ${
+                            isGrid
+                              ? `hover:absolute hover:z-[100] hover:w-[calc(50%-0.25rem)] hover:h-[calc(50%-0.25rem)] hover:scale-[2.08] ${getPositionClasses()}` 
+                              : 'hover:scale-105'
+                          }`}
+                          style={{ 
+                            backgroundColor: "var(--background)",
+                            transformOrigin: isGrid ? getTransformOrigin() : 'center',
+                            transition: isGrid 
+                              ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), width 0s, height 0s' 
+                              : 'transform 0.3s ease-out',
+                            overflow: 'hidden',
+                            willChange: isGrid ? 'transform' : 'auto'
+                          }}
+                        >
+                          <div className="w-full h-full overflow-hidden rounded-lg">
+                            <Image
+                              src={image}
+                              alt={`${subsection.title} image ${index + 1}`}
+                              width={1200}
+                              height={675}
+                              className="w-full h-auto"
+                              style={{ objectFit: "contain", display: "block" }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
             ))}
             {section.images && section.images.length > 0 && (
-              <div className="mt-8 space-y-6">
-                {section.images.map((image, index) => (
-                  <div
-                    key={index}
-                    className="relative w-full rounded-lg overflow-hidden"
-                    style={{ backgroundColor: "var(--background)" }}
-                  >
-                    <Image
-                      src={image}
-                      alt={`${section.title} image ${index + 1}`}
-                      width={1200}
-                      height={675}
-                      className="w-full h-auto"
-                      style={{ objectFit: "contain" }}
-                    />
-                  </div>
-                ))}
+              <div className={`mt-8 ${section.images.length === 4 ? 'relative grid grid-cols-2 gap-2 overflow-hidden' : 'space-y-6'}`}>
+                {section.images.map((image, index) => {
+                  const getTransformOrigin = () => {
+                    if (index === 0) return 'top left';
+                    if (index === 1) return 'top right';
+                    if (index === 2) return 'bottom left';
+                    return 'bottom right';
+                  };
+                  const getPositionClasses = () => {
+                    if (index === 0) return 'hover:top-0 hover:left-0 hover:right-auto hover:bottom-auto';
+                    if (index === 1) return 'hover:top-0 hover:right-0 hover:left-auto hover:bottom-auto';
+                    if (index === 2) return 'hover:bottom-0 hover:left-0 hover:top-auto hover:right-auto';
+                    return 'hover:bottom-0 hover:right-0 hover:top-auto hover:left-auto';
+                  };
+                  const isGrid = section.images && section.images.length === 4;
+                  return (
+                    <div
+                      key={index}
+                      className={`relative w-full rounded-lg cursor-pointer ${
+                        isGrid
+                          ? `hover:absolute hover:z-[100] hover:w-[calc(50%-0.25rem)] hover:h-[calc(50%-0.25rem)] hover:scale-[2.00] ${getPositionClasses()}` 
+                          : 'hover:scale-105'
+                      }`}
+                      style={{ 
+                        backgroundColor: "var(--background)",
+                        transformOrigin: isGrid ? getTransformOrigin() : 'center',
+                        transition: isGrid 
+                          ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), width 0s, height 0s' 
+                          : 'transform 0.3s ease-out',
+                        overflow: 'hidden',
+                        willChange: isGrid ? 'transform' : 'auto'
+                      }}
+                    >
+                      <div className="w-full h-full overflow-hidden rounded-lg">
+                        <Image
+                          src={image}
+                          alt={`${section.title} image ${index + 1}`}
+                          width={1200}
+                          height={675}
+                          className="w-full h-auto"
+                          style={{ objectFit: "contain", display: "block" }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </section>
@@ -232,7 +291,7 @@ export default function ProjectPage({
                   fontFamily: "var(--font-neue-machina)"
                 }}
               >
-                {paragraph}
+                <ParagraphWithLinks text={paragraph} />
               </p>
             ))}
           </section>

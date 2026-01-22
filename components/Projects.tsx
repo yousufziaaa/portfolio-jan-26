@@ -12,6 +12,7 @@ type Project = {
   description: string;
   image: string;
   slug: string;
+  hidden?: boolean;
 };
 
 const projects: Project[] = [
@@ -20,7 +21,7 @@ const projects: Project[] = [
     title: "Groq",
     dateRange: "May '25 - Dec '25",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+      "Built a comprehensive design system for GroqCloud, reducing 30 color conventions to 14. Designed platform features including LoRA management, dashboards, and AI search while contributing to the codebase.",
     image: "/groq-hero.png",
     slug: "groq",
   },
@@ -29,7 +30,7 @@ const projects: Project[] = [
     title: "Phia",
     dateRange: "Sep '25 - Dec '25",
     description:
-      "Product design work for an innovative platform. Focused on creating intuitive user experiences and building scalable design systems.",
+      "Growth design for a fashion discovery browser extension. Redesigned onboarding, optimized activation through A/B testing, and created Style Passport feature. Established a new design language across the product.",
     image: "/phia-hero.png",
     slug: "phia",
   },
@@ -50,6 +51,7 @@ const projects: Project[] = [
       "Product design work for an AI-powered platform. Focused on creating intuitive user experiences for complex AI interactions and workflows.",
     image: "/bronco-hero.png",
     slug: "bronco-ai",
+    hidden: true,
   },
   {
     id: 5,
@@ -59,6 +61,7 @@ const projects: Project[] = [
       "Designed and developed modular components and systems for a scalable design platform. Worked closely with engineering to build reusable design patterns and component libraries.",
     image: "/modulize-hero.png",
     slug: "modulize",
+    hidden: true,
   },
 ];
 
@@ -90,7 +93,7 @@ export default function Projects() {
       </motion.h2>
 
       <div className="space-y-16">
-        {projects.map((project, index) => (
+        {projects.filter(project => !project.hidden).map((project, index) => (
           <motion.article
             key={project.id}
             id={`project-${project.id}`}
