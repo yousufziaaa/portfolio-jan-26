@@ -114,11 +114,18 @@ export const projectContents: Record<string, ProjectContent> = {
     ],
     sections: [
       {
+        id: "overview",
+        title: "Overview",
+        level: 1,
+        content: [
+          "GroqCloud's rapid growth had led to inconsistent UI patterns across the platform. Colors were duplicated under different naming conventions, components had multiple implementations, and there was no single source of truth for design decisions. The engineering team needed a system that would accelerate development while ensuring visual consistency.",
+        ],
+      },
+      {
         id: "design-system",
         title: "Design System",
         level: 1,
         content: [
-          "GroqCloud's rapid growth had led to inconsistent UI patterns across the platform. Colors were duplicated under different naming conventions, components had multiple implementations, and there was no single source of truth for design decisions. The engineering team needed a system that would accelerate development while ensuring visual consistency.",
           "I broke the design system into two phases: Foundations — Colors, typography, icons, spacing, and elevation; and Components — Reusable UI elements from buttons to complex inputs.",
         ],
         images: ["/groq-0.png"],
