@@ -21,7 +21,7 @@ const projects: Project[] = [
     title: "Groq",
     dateRange: "May '25 - Dec '25",
     description:
-      "Built a comprehensive design system for GroqCloud, reducing 30 color conventions to 14. Designed platform features including LoRA management, dashboards, and AI search while contributing to the codebase.",
+      "I built a comprehensive design system for GroqCloud, reducing 30 color conventions to 14, and designed multiple platform features including LoRA management, dashboards, and AI search, all while contributing to the codebase.",
     image: "/groq-hero.png",
     slug: "groq",
   },
@@ -30,7 +30,7 @@ const projects: Project[] = [
     title: "Phia",
     dateRange: "Sep '25 - Dec '25",
     description:
-      "Growth design for a fashion discovery browser extension. Redesigned onboarding, optimized activation through A/B testing, and created Style Passport feature. Established a new design language across the product.",
+      "I worked as a growth designer for a fashion browser extension. As part of my work, I redesigned onboarding, optimized activation through A/B testing, and worked on a number of new features.",
     image: "/phia-hero.png",
     slug: "phia",
   },
@@ -39,7 +39,7 @@ const projects: Project[] = [
     title: "Klarify",
     dateRange: "Sep '24 - Sep '25",
     description:
-      "I designed the web application for a startup that helps users track and manage their daily tasks. The application features a clean, intuitive interface with a focus on productivity and user experience.",
+      "I designed the web application for a therapy product built to support therapists, not replace them. As the sole designer, I contributed to every feature and flow in the platform.",
     image: "/klarify-hero.png",
     slug: "klarify",
   },

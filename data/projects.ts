@@ -110,7 +110,7 @@ export const projectContents: Record<string, ProjectContent> = {
     title: "Groq",
     dateRange: "May '25 - Dec '25",
     preface: [
-      "From May to December 2025, I worked at Groq as a Product Design Intern on the GroqCloud platform. Over 8 months, I led the creation of a comprehensive design system for the entire console frontend—standardizing visual language, reducing color conventions from 30 to 14, and building a scalable component library. Alongside this foundational work, I designed and shipped multiple platform features, from LoRA management interfaces to mobile-optimized modals, while contributing directly to the codebase.",
+      "From May to December 2025, I worked at Groq as a Product Design Intern on the GroqCloud platform. Over the course of 8 months, I led the creation of a comprehensive design system for the entire console frontend, standardizing visual language, reducing color conventions from 30 to 14, and building a scalable component library. Alongside this foundational work, I had the opportunity to design and ship multiple platform features, from LoRA management interfaces to mobile-optimized modals, while contributing directly to the codebase.",
     ],
     sections: [
       {
@@ -118,7 +118,7 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Overview",
         level: 1,
         content: [
-          "GroqCloud's rapid growth had led to inconsistent UI patterns across the platform. Colors were duplicated under different naming conventions, components had multiple implementations, and there was no single source of truth for design decisions. The engineering team needed a system that would accelerate development while ensuring visual consistency.",
+          "As GroqCloud scaled rapidly, features were being built and shipped every week, but with no standardized design system, incosistent UI patterns and styling began to emerge. Colors were duplicated under different naming conventions, components had multiple implementations, and there was no single source of truth for design decisions. To solve this problem, I proposed building a comprehensive design system that would standardize the visual language, reduce color conventions, and build a scalable component library.",
         ],
       },
       {
@@ -126,7 +126,7 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Design System",
         level: 1,
         content: [
-          "I broke the design system into two phases: Foundations — Colors, typography, icons, spacing, and elevation; and Components — Reusable UI elements from buttons to complex inputs.",
+          "I broke the design system into two phases: Foundations, which included colors, typography, icons, spacing, and elevation; and Components, which were reusable UI elements from simple buttons to complex inputs.",
         ],
         images: ["/groq-0.png"],
       },
@@ -135,10 +135,10 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Foundations",
         level: 2,
         content: [
-          "I began by auditing every color in use across the console, uncovering duplicates and near-identical shades scattered throughout the codebase. After consolidating these into a streamlined palette, I built a Tailwind CSS-based color system with shades from 50-950, reducing 30 different color conventions down to 14 core values.",
-          "To make the system truly scalable, I introduced semantic naming conventions that mapped to the Tailwind palette. Instead of ambiguous names like $neutral-popover-foreground, designers and engineers could now reference clear, purpose-driven tokens like $text-primary, $text-secondary, or $background-default.",
-          "This approach enabled seamless theme switching—$background-default maps to $neutral-50 in both light and dark modes without requiring overrides, making theming effortless.",
-          "Using Tailwind as the framework, I defined text styles split between body and headings, with each style following a text-type-size convention (e.g., text-body-small, text-heading-large). Size, weight, line-height, and tracking were all standardized within this system.",
+          "I began by auditing every color in use across the console, to uncover duplicates and near-identical shades which were scattered throughout the codebase. After consolidating these into a streamlined palette, I started to build a Tailwind CSS-based color system with shades from 50-950, while reducing 30 different color conventions down to 14 core values.",
+          "To make the system truly scalable, I introduced semantic naming conventions that mapped to the Tailwind palette. Instead of ambiguous names like $neutral-popover-foreground, I opted for more relevant token names, like $text-primary, $text-secondary, or $background-default.",
+          "By using these semantic names, it enabled seamless theme switching, because token like $background-default would map to $neutral-50 in both light and dark modes, without requiring any manual overrides.",
+          "Keeping with the Tailwind framework, I also defined text styles, split between body and headings, with each style following a text-type-size convention (e.g., text-body-small, text-heading-large). Size, weight, line-height, and tracking were all standardized within this system.",
           "Icons were sourced from the Lucide library, and spacing utilized a consistent scale based on rem units (1 rem = 16px) with tokens like $spacing-04 and $spacing-06.",
         ],
         images: ["/groq-1.png"],
@@ -148,10 +148,9 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Components",
         level: 2,
         content: [
-          "After auditing the console, I identified every repeated UI element that could be componentized. Each component was designed across three sizes (small, default, large), implemented in both light and dark modes, and documented with hover, active, and disabled states.",
+          "After auditing the console for colors, I went back and identified every repeated UI element that could be componentized. Each component was designed across three sizes (small, default, large), implemented in both light and dark modes, and documented with hover, active, and disabled states.",
           "Many components required multiple variants to cover different use cases. For example, the button component included:",
-          "button-primary, button-secondary, button-ghost",
-          "button-dropdown, button-pill, button-outline, button-split",
+          "button-primary, button-secondary, button-ghost, button-dropdown, button-pill, button-outline, button-split",
         ],
         images: ["/groq-2.png"],
       },
@@ -160,7 +159,7 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Impact",
         level: 2,
         content: [
-          "The design system became the foundation for all new GroqCloud development, enabling faster implementation, consistent user experience, and easier onboarding for new designers and engineers.",
+          "The design system became the foundational building blocks for all new features being built on GroqCloud, enabling both faster design & faster implementation, as well as a more consistent user experience.",
         ],
       },
       {
@@ -168,7 +167,7 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Feature Design & Development",
         level: 1,
         content: [
-          "Beyond the design system, I designed and shipped several key platform features:",
+          "Beyond the design system, I also had the opportunity to design a number of new platform features, and even ship a few of them directly:",
         ],
       },
       {
@@ -176,7 +175,7 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "LoRA Management Interface",
         level: 2,
         content: [
-          "Designed an iterative evolution from card-based layouts to a streamlined list-based interface for managing LoRA fine-tuned models, improving information density and scanning efficiency.",
+          "One new feature was the addition of LoRAs on the console. While I won't go into the reasoning and design decisions here, all decisions were backed by user requirements and data, and went through a number of iterations before being shipped.",
         ],
         images: ["/groq-3.png"],
       },
@@ -185,7 +184,7 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Usage Dashboard",
         level: 2,
         content: [
-          "Created a comprehensive dashboard for monitoring API usage statistics, costs, and analytics, giving users clear visibility into their GroqCloud consumption.",
+          "A big pain point on the console was the data (usage) dashboard. This went through a massive redesign, prioritizing better information hierarchy, improved readability and more succinct charts and data visualizations. To design this feature, my manager and I ran a number of user interviews to gather key requirements and define user flows, in order to craft the best user experience.",
         ],
         images: ["/groq-4.png"],
       },
@@ -194,7 +193,7 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Documentation Search (cmd+k)",
         level: 2,
         content: [
-          "Designed an AI-powered command palette for quick documentation access, integrating intelligent question-answering directly into the console workflow.",
+          "While definitely a smaller project, this is one of the ones I'm more proud of. When we added search to the docs pages, it looked very boilerplate and didn't fit the modern design we were striving for. After mocking up a few designs, I decided to take a stab at rehauling the UI (and some of the functionality directly), and ended up shipping my PR directly. This was the first PR I'd ever shipped, and my search modal still exists on the GroqCloud docs pages today :)",
         ],
         images: ["/groq-5.png"],
       },
@@ -203,18 +202,18 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Mobile Modal Optimization",
         level: 2,
         content: [
-          "Redesigned modal experiences for mobile devices, ensuring responsive layouts that maintained usability across screen sizes.",
+          "A pain point that kept coming up was the formatting of our modals on mobile. Due to the smaller screen sizes, our modals were getting cut off and didn't look great. I went through and redesigned each of modals to be more responsive to ensyre that they looked great on all screen sizes. I also created a new modal component that could be used across the platform, and could be easily styled to match the new design system.",
         ],
         images: ["/groq-6.png"],
       },
-      {
-        id: "direct-code-contributions",
-        title: "Direct Code Contributions",
-        level: 2,
-        content: [
-          "In addition to design work, I contributed to the GroqCloud codebase, shipping both polish improvements and new feature implementations.",
-        ],
-      },
+    //   {
+    //     id: "direct-code-contributions",
+    //     title: "Direct Code Contributions",
+    //     level: 2,
+    //     content: [
+    //       "In addition to design work, I contributed to the GroqCloud codebase, shipping both polish improvements and new feature implementations.",
+    //     ],
+    //   },
     ],
   },
   phia: {
@@ -227,7 +226,7 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Overview",
         level: 1,
         content: [
-          "From September to December 2025, I worked as a Growth Design Intern at Phia, a fashion discovery iOS browser extension. I focused on three key growth levers: reducing extension churn, increasing user activation, and driving monetization. Through iterative design, A/B testing, and data-driven insights, I redesigned core user journeys and established a cohesive design language that evolved to define the entire product experience.",
+          "From September to December 2025, I worked as a Growth Design Intern at Phia, a fashion discovery iOS browser extension. During this time, I focused on three key growth levers: reducing extension churn, increasing user activation, and driving monetization. I went through a number of iterations and rounds, ran A/B tests, and dug through Mixpanel data to better understand user behavior and pain points. By the end of my time there, I had redesigned core user journeys and contributed to establishing a cohesive design language that eventually evolved to define the entire product experience.",
         ],
       },
       {
@@ -247,10 +246,10 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "research-discovery",
             title: "Research & Discovery",
             content: [
-              "I began by auditing competitor iOS browser extensions, analyzing what made their onboarding experiences successful or unsuccessful. Key patterns emerged:",
-              "Progress indicators (breadcrumbs) reduced abandonment by showing users where they were in the flow",
-              "Early personalization increased engagement and relevance",
-              "Copy optimization significantly improved click-through rates",
+              "I began by auditing competitor iOS browser extensions, to analyze what made their onboarding experiences successful or unsuccessful. From this, a few key patterns emerged:",
+              "Progress indicators (breadcrumbs) tended to reduce abandonment, by showing users where they were in the flow.",
+              "Early personalization in an onboarding increased engagement and relevance by getting users more invested in the flow.",
+              "Copy optimization significantly improved click-through rates by making the value proposition more clear.",
             ],
             images: ["/phia-1.png"],
           },
@@ -259,8 +258,8 @@ export const projectContents: Record<string, ProjectContent> = {
             title: "Design Process",
             content: [
               "I approached the redesign in two phases:",
-              "Quick wins — Reskinned the existing flow with improved copy, progress indicators, and minor UX refinements",
-              "Full redesign — Built a completely reimagined experience with personalization, updated styling, and a cohesive visual language",
+              "First, quick wins: I reskinned the existing flow with improved copy, progress indicators, and minor UX refinements, as things that could be shipped easily but still resulting in a big impact.",
+              "Next, a full redesign: I built a completely reimagined onboarding experience with personalization, updated styling, and a cohesive visual language",
             ],
             images: ["/phia-2.png"],
           },
@@ -268,8 +267,8 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "iteration-tension",
             title: "Iteration & Tension",
             content: [
-              "High-impact screens went through dozens of iterations as I navigated a tension between the founders' desire for flashy marketing moments and creating the best possible user experience. Without an existing design system, each iteration began to diverge visually, creating inconsistency with the rest of the app.",
-              "This challenge became an opportunity: I developed a new design language during the onboarding work that eventually became the foundation for the entire product. New patterns for typography, color usage, component styling, and interaction design emerged organically and were systematically applied across Phia.",
+              "Some of the more high-impact screens went through dozens of iterations as I navigated a tension between the founders' desire for flashy marketing moments and trying to craft the best possible user experience. Without an existing design system, each iteration began to diverge visually, which created inconsistency with the rest of the app.",
+              "But, I started to view this challenge as an opportunity: I developed a new design language during the onboarding work that eventually became the foundation for the entire product. New patterns for typography, color usage, component styling, and interaction design emerged organically and were systematically applied across Phia.",
             ],
             images: ["/phia-3.png"],
           },
@@ -285,15 +284,15 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "the-problem",
             title: "The Problem",
             content: [
-              "After completing onboarding, users were directed to Safari to activate the extension—but activation rates were concerningly low. Many users exited prematurely or failed to activate correctly, creating a critical drop-off point in the user journey.",
+              "After completing onboarding, users were directed to Safari to activate the extension, but activation rates were concerningly low. Many users exited prematurely or failed to activate correctly, which created a critical drop-off point in the user journey.",
             ],
           },
           {
             id: "investigation",
             title: "Investigation",
             content: [
-              "Through A/B testing and PostHog session recordings, I identified the core issue: users were confused during Apple's system modals and frequently selected the wrong option, preventing successful activation.",
-              "Since we couldn't modify Apple's native modals, the solution had to come from improved preparation—clearer copy and better visual guidance on the activation screen itself.",
+              "Through A/B testing and PostHog session recordings, I was able to identify the core issue: users were confused during Apple's system modals and frequently selected the wrong option, which prevented successful activation.",
+              "Since we couldn't modify Apple's native modals, the solution had to come from improved preparation on our end -- clearer copy and better visual guidance on the activation screen itself.",
             ],
             images: ["/phia-4.png"],
           },
@@ -301,11 +300,11 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "design-testing",
             title: "Design & Testing",
             content: [
-              "Activation became a P0 priority across the company. I ran weekly experiments, testing:",
-              "Different copy approaches to set clear expectations",
-              "Visual guides showing exactly what to tap",
-              "Step-by-step instructions vs. single-screen explanations",
-              "Edge case handling for incorrect inputs and session timeouts",
+              "Activation then became a P0 priority across the company. I started to run weekly experiments to test different approaches to activation, including:",
+              "Different copy approaches to set clear expectation.",
+              "Visual guides showing exactly what to tap.",
+              "Step-by-step instructions vs. single-screen explanations.",
+              "Edge case handling for incorrect inputs and session timeouts.",
               "Each iteration was informed by data, and we systematically improved activation rates by making the required user actions crystal clear before they entered Safari.",
             ],
             images: ["/phia-5.png", "/phia-6.png"],
@@ -322,11 +321,11 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "style-passport",
             title: "Style Passport",
             content: [
-              "I designed \"Style Passport,\" a comprehensive feature aimed at increasing engagement and shareability while driving monetization. The feature combined three elements:",
-              "Style Profile — An AI-powered analysis of the user's fashion preferences and aesthetic, surfacing personalized insights",
-              "Outfit Gallery — A space for users to upload and curate their outfits, with social sharing built in to increase virality",
-              "Shopping Profile — A year-round \"Spotify Wrapped\" experience showing users their shopping patterns, favorite brands, spending insights, and style evolution",
-              "The goal was to create a shareable, engaging feature that would increase user retention while creating natural upsell opportunities for premium features.",
+              "I also had the opporuntity to work on the design of \"Style Passport,\" a comprehensive feature set aimed at increasing engagement and shareability while driving monetization. The feature combined three main elements:",
+              "Style Profile: An AI-powered analysis of the user's fashion preferences and aesthetic, surfacing personalized insights.",
+              "Outfit Gallery: A space for users to upload and curate their outfits, with social sharing built in to increase virality.",
+              "Shopping Profile: A year-round \"Spotify Wrapped\" experience showing users their shopping patterns, favorite brands, spending insights, and style evolution.",
+              "The goal was to ultimately create a shareable, engaging feature that would increase user retention while also creating natural upsell opportunities for more premium features that were planned.",
             ],
             images: ["/phia-7.png", "/phia-8.png"],
           },
@@ -337,10 +336,10 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Additional Work",
         level: 1,
         content: [
-          "Beyond these core projects, I contributed across multiple touchpoints:",
-          "Onboarding animations — Created motion design for key onboarding moments to increase delight and clarity",
-          "App Store optimization — Redesigned all App Store screenshots to improve conversion from store page to install",
-          "Growth features — Designed referral flows, email campaign templates, and other retention-focused features",
+          "Beyond these core projects, I also contributed across multiple touchpoints:",
+          "Onboarding animations: I created motion design for key onboarding moments to increase delight and clarity,",
+          "App Store optimization: I redesigned all App Store screenshots to improve conversion from store page to install,",
+          "Growth features: I designed referral flows, email campaign templates, and other retention-focused features.",
         ],
         images: ["/phia-9.png", "/phia-10.png"],
       },
@@ -350,7 +349,7 @@ export const projectContents: Record<string, ProjectContent> = {
     title: "Klarify",
     dateRange: "Sep '24 - Sep '25",
     preface: [
-      "I joined Klarify in late 2024 as the sole designer on a rapidly scaling mental health AI platform. Over the course of a year, I designed every user-facing screen, established comprehensive brand guidelines, overhauled marketing materials, and built a scalable design system. Working directly with founders and engineers, I balanced the challenge of introducing AI to a traditionally tech-resistant audience while maintaining clarity and simplicity across complex therapeutic workflows.",
+      "I joined Klarify in late 2024 as the sole designer on a rapidly scaling mental health AI platform. Over the course of a year, I designed every user-facing screen, established comprehensive brand guidelines, overhauled marketing materials, and built a scalable design system. Working directly with the founders and engineering team, I tackled the challenge of introducing AI to a more tech-resistant audience, while trying to maintain clarity and simplicity across complex therapeutic workflows.",
     ],
     sections: [
       {
@@ -369,14 +368,14 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "the-challenge",
             title: "The Challenge",
             content: [
-              "Klarify needed a web presence that could communicate its expanding feature set while navigating a unique tension: positioning as an AI company in a field where many therapists were skeptical of the technology.",
+              "Klarify needed a web presence that could effectively communicate its expanding feature set, while navigating a unique tension: positioning itself as an AI company in a field where many therapists were skeptical of the technology.",
             ],
           },
           {
             id: "website-v1",
             title: "Website V1 — Finding Identity",
             content: [
-              "The company was in a transitional phase, still defining its identity. I led the redesign focusing on clear value proposition communication and understanding the core audience. Through multiple iterations, we tested different sections and styles to find the right balance—showcasing AI capabilities without alienating traditional practitioners.",
+              "The company was in a transitional phase, where it was still defining its identity. I led a website redesign to focus on communicating the value proposition as clearly as possible, while simultaneously trying to understand the core audience. Through multiple iterations, we tested different sections and styles to find the right balance of showcasing AI capabilities, without alienating traditional practitioners.",
               "Once the design was finalized, I built and shipped the site in Framer.",
             ],
             images: ["/klarify-1.png"],
@@ -385,7 +384,7 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "website-v2",
             title: "Website V2 — Current Version",
             content: [
-              "In late 2025, I led a second iteration that refined the brand further. View the current site here.",
+              "In late 2025, I led a second iteration that refined the brand further, and had a more concrete style defined. View the current site here.",
             ],
           },
         ],
@@ -402,10 +401,11 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "digital-advertising",
             title: "Digital Advertising",
             content: [
-              "LinkedIn banners and promotional graphics",
-              "YouTube video thumbnails and ad campaigns",
-              "Multi-platform ads designed across screen sizes",
-              "During this work, Klarify's color guidelines and design language crystallized—every asset followed a consistent structure that became the foundation for all future brand work.",
+              "Some of the work I did on this front included:",
+              "LinkedIn banners and promotional graphics.",
+              "YouTube video thumbnails and ad campaigns.",
+              "Multi-platform ads designed across screen sizes.",
+              "During this work, Klarify's color guidelines and design language began to converge, and thus every asset followed a consistent structure that became the foundation for all future brand work.",
             ],
             images: ["/klarify-2.png", "/klarify-3.png"],
           },
@@ -424,26 +424,26 @@ export const projectContents: Record<string, ProjectContent> = {
         title: "Platform Design",
         level: 1,
         content: [
-          "As the sole designer, I contributed to every feature and flow in the Klarify platform. Working autonomously with feedback loops from founders and engineering, I prioritized simplification—stripping away complexity to create intuitive experiences for therapists at all levels of tech proficiency.",
+          "As the sole designer, I contributed to every feature and flow in the Klarify platform. Working primarily autonomously but in constant conversation with the founders and engineering team, I prioritized simplification. I focused on stripping away complexity in order to create intuitive experiences for therapists at all levels of tech proficiency.",
         ],
         subsections: [
           {
             id: "design-philosophy",
             title: "Design Philosophy: Less is More",
             content: [
-              "Each feature went through multiple iterations, progressively refining the experience month over month. Below are key projects that showcase the breadth of my work. (Reach out if you'd like to see more—I'm happy to walk through the full scope.)",
+              "Each feature went through multiple iterations, progressively refining the experience month over month. Below are key projects that showcase the breadth of my work. (Reach out if you'd like to see more -- I'm happy to walk through the full scope.)",
             ],
           },
           {
             id: "overview-page",
             title: "Overview Page",
             content: [
-              "The Overview Page was the command center for each therapy session. Therapists could access notes, client details, reflection questions, transcripts, and AI-generated insights—all while interacting with Bloomy, Klarify's built-in AI assistant.",
+              "The Overview Page acted as the command center for each therapy session. Therapists could access notes, client details, reflection questions, transcripts, and AI-generated insights, all while interacting with Bloomy, Klarify's built-in AI assistant.",
               "Key actions included:",
-              "Creating and editing multiple note types and formats",
-              "Sharing notes with clients or colleagues",
-              "Asking Bloomy questions directly within the session context",
-              "The challenge was organizing dense information hierarchies while maintaining a clean, scannable interface that didn't overwhelm users.",
+              "Creating and editing multiple note types and formats.",
+              "Sharing notes with clients or colleagues.",
+              "Asking Bloomy questions directly within the session context.",
+              "The biggest challenge was attempting to organize dense information hierarchies, while maintaining a clean, scannable interface that didn't overwhelm users.",
             ],
             images: ["/overview-1.png", "/overview-2.png", "/overview-3.png", "/overview-4.png"],
           },
@@ -451,9 +451,9 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "record-page",
             title: "Record Page",
             content: [
-              "The Record Page served as the app's homepage—intentionally, since recording sessions was therapists' most frequent action. The design needed to balance two competing needs:",
-              "Displaying information — Showing past sessions and relevant history",
-              "Enabling action — Making it effortless to start recording via multiple methods",
+              "The Record Page served as the app's homepage. Since recording sessions was therapists' most frequent action, the design needed to balance two competing needs:",
+              "Displaying information: The page needed to show past sessions and relevant history",
+              "Enabling action: It also needed to be effortless to allow therapists to start recording via multiple methods",
               "The recording flow itself was the most critical part of the entire platform. It went through numerous iterations to reduce friction and handle edge cases like interrupted recordings, background audio, and session metadata capture.",
             ],
             images: ["/record-1.png", "/record-2.png", "/record-3.png", "/record-4.png"],
@@ -469,11 +469,11 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "the-complexity",
             title: "The Complexity",
             content: [
-              "User roles emerged—individual therapists, clinic administrators, billing managers—each with different permissions and capabilities. Administrators needed to:",
-              "Purchase and manage seat licenses",
-              "Reassign seats to different users",
-              "Update billing for specific seats",
-              "View clinic-wide usage and analytics",
+              "User roles began to emerge; individual therapists, clinic administrators and billing managers, each one with different permissions and capabilities. Administrators needed to:",
+              "Purchase and manage seat licenses.",
+              "Reassign seats to different users.",
+              "Update billing for specific seats.",
+              "View clinic-wide usage and analytics.",
               "The flow went through countless iterations, guided by user research and real-world requirements from clinic partners. The final design balanced power-user functionality with clarity for less technical users.",
             ],
             images: ["/settings-1.png", "/settings-2.png", "/settings-3.png", "/settings-4.png"],
@@ -482,7 +482,7 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "klarifygpt",
             title: "KlarifyGPT",
             content: [
-              "Toward the end of my time at Klarify, I designed KlarifyGPT, the in-house AI assistant. This presented an opportunity to design for conversational AI while being mindful of our audience—including elderly therapists who weren't tech-savvy.",
+              "Toward the end of my time at Klarify, I designed KlarifyGPT, the in-house AI assistant. This presented an opportunity to design for conversational AI while being mindful of our audience, including elderly therapists who weren't tech-savvy.",
             ],
             images: ["/gpt-1.png", "/gpt-2.png", "/gpt-3.png", "/gpt-4.png"],
           },
@@ -490,12 +490,12 @@ export const projectContents: Record<string, ProjectContent> = {
             id: "design-approach-klarifygpt",
             title: "Design Approach",
             content: [
-              "I opted for a lightweight interface with:",
-              "Clear, succinct explanations of AI capabilities",
-              "\"Quick Actions\" for common tasks to save time",
-              "Transparent AI responses with visible sourcing",
-              "Familiar patterns that didn't require learning new interaction models",
-              "The goal was making AI feel helpful rather than intimidating—a tool that enhanced their practice without adding cognitive load.",
+              "To tackle this, I opted for a lightweight interface with:",
+              "Clear, succinct explanations of AI capabilities.",
+              "\"Quick Actions\" for common tasks to save time.",
+              "Transparent AI responses with visible sourcing.",
+              "Familiar patterns that didn't require learning new interaction models.",
+              "The goal was to make AI feel helpful rather than intimidating -- a tool that therapists could use to enhance their practice without adding cognitive load.",
             ],
           },
         ],
