@@ -338,7 +338,7 @@ export const projectContents: Record<string, ProjectContent> = {
         content: [
           "Beyond these core projects, I also contributed across multiple touchpoints:",
           "Onboarding animations: I created motion design for key onboarding moments to increase delight and clarity,",
-          "App Store optimization: I redesigned all App Store screenshots to improve conversion from store page to install,",
+          "App Store optimization: I redesigned all App Store screenshots to improve conversion from store page to install.",
           "Growth features: I designed referral flows, email campaign templates, and other retention-focused features.",
         ],
         images: ["/phia-9.png", "/phia-10.png"],
