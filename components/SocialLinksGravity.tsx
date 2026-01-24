@@ -16,9 +16,14 @@ interface SocialLink {
 const socialLinks: SocialLink[] = [
   { name: "LinkedIn", url: "https://linkedin.com/in/zia-yousuf", x: "left", y: "-100px", angle: -5 },
   { name: "Twitter", url: "https://twitter.com/yousufziaaa", x: "right", y: "-200px", angle: 5 },
-  { name: "GitHub", url: "https://github.com/yousufziaaa", x: "left", y: "-300px", angle: 3 },
+  { name: "Resume", url: "/resume.pdf", x: "left", y: "-300px", angle: 3 },
   { name: "Research", url: "https://pubmed.ncbi.nlm.nih.gov/?term=Islam+YZ&cauthor_id=41027339", x: "right", y: "-400px", angle: -3 },
 ];
+
+// Helper to determine if link should open in new tab
+const shouldOpenInNewTab = (url: string): boolean => {
+  return url.startsWith("http") || url.endsWith(".pdf");
+};
 
 export default function SocialLinksGravity() {
   const [isVisible, setIsVisible] = useState(false);
@@ -169,8 +174,8 @@ export default function SocialLinksGravity() {
               <motion.a
                 data-pill-id={link.name}
                 href={link.url}
-                target={link.url.startsWith("http") ? "_blank" : "_self"}
-                rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
+                target={shouldOpenInNewTab(link.url) ? "_blank" : "_self"}
+                rel={shouldOpenInNewTab(link.url) ? "noopener noreferrer" : undefined}
                 className="text-lg sm:text-xl md:text-2xl bg-[#EEEEEE] dark:bg-[#222222] text-[#5C5C48] dark:text-[#C0C0C0] border border-[#5C5C48] dark:border-[#505050] rounded-full hover:cursor-pointer hover:bg-[#5C5C48] dark:hover:bg-[#505050] hover:text-white dark:hover:text-[#222222] px-6 py-3 md:px-9 md:py-5 pointer-events-auto transition-colors duration-200 whitespace-nowrap shadow-sm"
                 whileTap={{ scale: 0.9 }}
                 initial={{ opacity: 0 }}
