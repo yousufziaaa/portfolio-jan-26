@@ -289,18 +289,21 @@ export default function ScrollTimeline() {
             })}
           </div>
 
-          {/* Moving box indicator - modern rounded */}
+          {/* Moving circle indicator */}
           <motion.div
-            className="absolute left-0 w-12 pointer-events-none rounded-full"
+            className="absolute pointer-events-none rounded-full"
             style={{
-              height: `${segmentHeight * 0.8}%`,
-              top: `${boxTop + (segmentHeight * 0.1)}%`,
+              width: '32px',
+              height: '32px',
+              left: '50%',
+              top: `${boxTop + segmentHeight / 2}%`,
+              transform: 'translate(-50%, -50%)',
               backgroundColor: "var(--timeline-bar)",
             }}
             initial={{ opacity: 0 }}
             animate={{
               opacity: isVisible ? 1 : 0,
-              top: `${boxTop + (segmentHeight * 0.1)}%`,
+              top: `${boxTop + segmentHeight / 2}%`,
             }}
             transition={{
               top: { duration: 0.2, ease: "easeOut" },

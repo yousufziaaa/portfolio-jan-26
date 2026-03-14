@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="font-departure-mono uppercase flex flex-col justify-end" style={{ color: "var(--accent)" }}>
           <div className="leading-relaxed text-[12px] md:text-[14px]">
             <div>MADE WITH LOVE BY</div>
-            <div>YOUSUF (AND CURSOR)</div>
+            <div>YOUSUF</div>
           </div>
         </div>
 

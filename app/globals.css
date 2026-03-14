@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #EEEEEE;
+  --background: #F5F5F4;
   --foreground: #5C5C48;
   --header: #333333;
   --accent: #E55F1C;
-  --highlight: #FFB895;
+  --highlight: rgba(249, 115, 22, 0.4);
   --timeline-bar: #5C5C48;
 }
 
@@ -16,8 +16,8 @@
   --foreground: #C0C0C0;
   --header: #FFFFFF;
   --accent: #FFA234;
-  --highlight: #AD6510;
-  --timeline-bar: #505050;
+  --highlight: rgba(251, 146, 60, 0.45);
+  --timeline-bar: #C0C0C0;
 }
 
 html {
@@ -65,10 +65,6 @@ html::-webkit-scrollbar {
   outline-offset: 2px;
 }
 
-/* Hide default cursor on project images */
-a[data-project-link] {
-  cursor: none;
-}
 
 /* Smooth transitions for theme changes */
 *,

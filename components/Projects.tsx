@@ -154,8 +154,8 @@ export default function Projects() {
         <motion.div
           className="fixed pointer-events-none z-50"
           style={{
-            left: cursorPosition.x + 5,
-            top: cursorPosition.y + 10,
+            left: cursorPosition.x + 2,
+            top: cursorPosition.y + 20,
           }}
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}

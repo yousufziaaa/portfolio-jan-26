@@ -57,6 +57,15 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
+          I&apos;m currently @ Nvidia, where I&apos;m working on some really groundbreaking stuff.
+        </motion.p>
+        <motion.p
+          className="mb-0 whitespace-break-spaces mt-4"
+          style={{ fontSize: "16px", color: "var(--foreground)" }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
           Most recently, I was working at Groq, where I built the entire{" "}
           <TextHighlighter
             className="rounded-[0.3em] px-px"
@@ -74,15 +83,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          Outside of my designer persona, you&apos;ll probably find me at{" "}
-          <TextHighlighter
-            className="rounded-[0.3em] px-px"
-            transition={{ type: "spring", duration: 1, delay: 0.4, bounce: 0 } as Transition}
-            useInViewOptions={{ once: true, initial: true, amount: 0.1 }}
-          >
-            the climbing gym, cooking for my friends, or watching a movie
-          </TextHighlighter>
-          .
+          Outside of my designer persona, you&apos;ll probably find me at the climbing gym, cooking for my friends, or watching a movie.
         </motion.p>
       </motion.div>
     </section>
