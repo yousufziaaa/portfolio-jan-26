@@ -8,33 +8,33 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
 export const metadata: Metadata = {
-  title: "Yousuf's Portfolio",
+  title: "Yousuf Zia | Product Designer x Engineer",
   description: "Modern portfolio website showcasing creative design and development work",
   keywords: ["portfolio", "design", "development", "web design", "UI/UX"],
-  authors: [{ name: "Yousuf" }],
+  authors: [{ name: "Yousuf Zia" }],
   icons: {
     icon: "/favicon-portfolio.png",
     shortcut: "/favicon-portfolio.png",
   },
   metadataBase: new URL(siteUrl),
   openGraph: {
-    title: "Yousuf's Portfolio",
+    title: "Yousuf Zia | Product Designer x Engineer",
     description: "Modern portfolio website showcasing creative design and development work",
     type: "website",
     url: siteUrl,
-    siteName: "Yousuf's Portfolio",
+    siteName: "Yousuf Zia | Product Designer x Engineer",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Yousuf's Portfolio",
+        alt: "Yousuf Zia | Product Designer x Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Yousuf's Portfolio",
+    title: "Yousuf Zia | Product Designer x Engineer",
     description: "Modern portfolio website showcasing creative design and development work",
     images: ["/og-image.png"],
   },
