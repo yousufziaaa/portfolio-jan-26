@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { departureMono, neueMachina } from "./fonts";
 
@@ -48,6 +49,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${departureMono.variable} ${neueMachina.variable} antialiased`}>
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="514d85e6-0a8b-49ae-9e6b-f8e01d8fe353"
+          strategy="afterInteractive"
+        />
         {children}
       </body>
     </html>
