@@ -4,6 +4,7 @@ import BackToTop from "@/components/BackToTop";
 import Image from "next/image";
 import Link from "next/link";
 import ParagraphWithLinks from "@/components/ParagraphWithLinks";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function ProjectPage({
   params,
@@ -49,6 +50,18 @@ export default function ProjectPage({
 
   return (
     <main className="min-h-screen">
+      {/* Top bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 px-8 sm:px-12 md:px-16 lg:px-20 py-6 flex justify-between items-center">
+        <Link
+          href="/"
+          className="text-sm font-departure-mono transition-opacity hover:opacity-70"
+          style={{ color: "var(--foreground)" }}
+        >
+          ← Go back home
+        </Link>
+        <ThemeToggle />
+      </div>
+
       <div className="relative">
         {/* Table of Contents - positioned on the right */}
         <div className="hidden lg:block fixed right-8 top-24 z-10">
@@ -56,18 +69,9 @@ export default function ProjectPage({
         </div>
 
         {/* Main content */}
-        <div className="mx-auto max-w-[650px] px-8 sm:px-12 md:px-16 lg:px-20 py-16">
+        <div className="mx-auto max-w-[650px] px-8 sm:px-12 md:px-16 lg:px-20 py-32">
           {/* Header */}
           <header className="mb-16">
-          <div className="mb-4">
-            <Link
-              href="/"
-              className="inline-block mb-6 text-sm font-departure-mono transition-opacity hover:opacity-70"
-              style={{ color: "var(--header)" }}
-            >
-              ← Back
-            </Link>
-          </div>
           <h1
             className="font-departure-mono mb-4"
             style={{ fontSize: "32px", fontWeight: "400", color: "var(--header)" }}

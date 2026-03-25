@@ -74,3 +74,32 @@ html::-webkit-scrollbar {
   transition-timing-function: ease;
   transition-duration: 0.3s;
 }
+
+/* Writing post prose styles */
+.prose-writing p {
+  margin-bottom: 1.5rem;
+}
+.prose-writing h1,
+.prose-writing h2,
+.prose-writing h3 {
+  font-family: inherit;
+  font-weight: 400;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--header);
+}
+.prose-writing h2 { font-size: 1.25rem; }
+.prose-writing h3 { font-size: 1.1rem; }
+.prose-writing a {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-writing ul,
+.prose-writing ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.prose-writing li {
+  margin-bottom: 0.4rem;
+}

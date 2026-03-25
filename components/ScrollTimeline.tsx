@@ -211,7 +211,7 @@ export default function ScrollTimeline() {
                 >
                   {/* The actual bar - vertical with modern styling */}
                   <motion.div
-                    className="h-3 w-0.5 rounded-full"
+                    className="h-3 w-[3px] rounded-full"
                     style={{ 
                       backgroundColor: "var(--timeline-bar)",
                       opacity: 0.4,
@@ -272,7 +272,7 @@ export default function ScrollTimeline() {
                 >
                   {/* The actual bar - modern styling */}
                   <motion.div
-                    className="w-8 h-0.5 rounded-full"
+                    className="w-8 h-[3px] rounded-full"
                     style={{ 
                       backgroundColor: "var(--timeline-bar)",
                       opacity: 0.4,

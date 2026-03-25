@@ -205,6 +205,7 @@ export default function ClockNav() {
                     height: BAR_THICKNESS,
                     backgroundColor: "var(--timeline-bar)",
                     flexShrink: 0,
+                    borderRadius: 9999,
                   }}
                   animate={{ width: barWidth, opacity: barOpacity }}
                   transition={{

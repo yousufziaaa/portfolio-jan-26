@@ -5,30 +5,22 @@ import CenterUnderline from "@/components/fancy/text/underline-center";
 
 export default function Footer() {
   return (
-    <footer className="py-12 pb-16 md:pb-12">
-      <div className="flex flex-row justify-between items-end gap-8 md:gap-16">
-        {/* Left Text Block */}
-        <div className="font-departure-mono uppercase flex flex-col justify-end" style={{ color: "var(--accent)" }}>
-          <div className="leading-relaxed text-[12px] md:text-[14px]">
-            <div>MADE WITH LOVE BY</div>
-            <div>YOUSUF</div>
-          </div>
+    <footer className="pb-16 md:pb-12">
+      <div style={{ borderTop: "1px solid var(--foreground)", opacity: 0.4 }} className="mb-6" />
+      <div className="flex flex-row justify-between items-stretch gap-8 md:gap-16">
+        {/* Left: Nav Links */}
+        <div className="font-neue-machina flex flex-col gap-3 text-[12px] md:text-[14px]" style={{ color: "var(--foreground)" }}>
+          <Link href="/writing"><CenterUnderline>Writing</CenterUnderline></Link>
+          <Link href="/playground"><CenterUnderline>Playground</CenterUnderline></Link>
+          <Link href="/changelog"><CenterUnderline>Changelog</CenterUnderline></Link>
         </div>
 
-        {/* Right Text Block */}
-        <div className="font-departure-mono uppercase text-right md:text-left flex flex-col justify-end" style={{ color: "var(--foreground)" }}>
-          <div className="leading-relaxed whitespace-normal break-words text-[8px] md:text-[10px]">
-            <div>YOU CAN FIND ME [AT] YOUSUFZIAAA</div>
-            <div>ON ALL PLATFORMS OR BY WRITING</div>
-            <div>
-              TO ME AT{" "}
-              <Link href="mailto:yousuf.zephyr@gmail.com" className="inline-block">
-                <CenterUnderline>
-                  YOUSUF.ZEPHYR@GMAIL.COM
-                </CenterUnderline>
-              </Link>
-            </div>
-          </div>
+        {/* Right: Contact Info */}
+        <div className="font-neue-machina text-right text-[10px] md:text-[12px] leading-relaxed w-[180px] md:w-[180px]" style={{ color: "var(--foreground)" }}>
+          you can find me [at] yousufziaaa on all platforms or by writing to me at{" "}
+          <Link href="mailto:yousuf.zephyr@gmail.com" className="inline-block">
+            <CenterUnderline>yousuf.zephyr@gmail.com</CenterUnderline>
+          </Link>
         </div>
       </div>
     </footer>
