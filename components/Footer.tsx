@@ -10,7 +10,6 @@ export default function Footer() {
       <div className="flex flex-row justify-between items-stretch gap-8 md:gap-16">
         {/* Left: Nav Links */}
         <div className="font-neue-machina flex flex-col gap-3 text-[12px] md:text-[14px]" style={{ color: "var(--foreground)" }}>
-          <Link href="/writing"><CenterUnderline>Writing</CenterUnderline></Link>
           <Link href="/playground"><CenterUnderline>Playground</CenterUnderline></Link>
           <Link href="/changelog"><CenterUnderline>Changelog</CenterUnderline></Link>
         </div>
