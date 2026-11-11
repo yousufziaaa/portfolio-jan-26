@@ -11,6 +11,45 @@
   --timeline-bar: #5C5C48;
 }
 
+/* System (Instrument) tokens. Night is the default. */
+:root {
+  --sys-bg: #0b0b0a;
+  --sys-fg: #edebe4;
+  --sys-dim: #8f8b82;
+  --sys-faint: #5f5c56;
+  --sys-line: rgba(237, 235, 228, 0.12);
+  --sys-panel: rgba(11, 11, 10, 0.62);
+  --signal: #39ff5a;
+}
+
+.sys-label {
+  font-family: var(--font-departure-mono), monospace;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sys-panel {
+  background: var(--sys-panel);
+  border: 1px solid var(--sys-line);
+  border-radius: 6px;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+.spiral-word {
+  transition: fill 160ms ease-out;
+}
+
+.spiral-word[data-lit] {
+  fill: var(--spiral-accent);
+}
+
 .dark {
   --background: #222222;
   --foreground: #C0C0C0;

@@ -13,6 +13,14 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         header: "var(--header)",
+        sys: {
+          bg: "var(--sys-bg)",
+          fg: "var(--sys-fg)",
+          dim: "var(--sys-dim)",
+          faint: "var(--sys-faint)",
+          line: "var(--sys-line)",
+        },
+        signal: "var(--signal)",
       },
       fontFamily: {
         "departure-mono": ["var(--font-departure-mono)", "monospace"],
