@@ -11,6 +11,22 @@
   --timeline-bar: #5C5C48;
 }
 
+/* Fresh direction: a clean, neutral page. Near-white, near-black ink, and a
+   few "furniture" colours used one at a time. */
+:root {
+  --paper: #fafafa;
+  --paper-2: #f0f0ef;
+  --ink: #121212;
+  --ink-2: #5b5b59;
+  --ink-3: #8e8e8b;
+  --rule: rgba(18, 18, 18, 0.09);
+  --tomato: #e2452b;
+  --cobalt: #2f4fd1;
+  --leaf: #2f8a4c;
+  --marigold: #ef7b22;
+  --charcoal: #222221;
+}
+
 /* System (Instrument) tokens. Night is the default. */
 :root {
   --sys-bg: #0b0b0a;
@@ -141,4 +157,31 @@ html::-webkit-scrollbar {
 }
 .prose-writing li {
   margin-bottom: 0.4rem;
+}
+
+/* Truck-art jhalar: each pendant sways a little on its own. */
+@keyframes jhalar-sway {
+  from { transform: rotate(-3deg); }
+  to { transform: rotate(3deg); }
+}
+.jhalar-sway {
+  animation: jhalar-sway 2.4s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .jhalar-sway { animation: none; }
+}
+
+/* Page content arriving after a navigation (app/(site)/template.tsx).
+   `backwards` so no transform is left behind once it settles. */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+@keyframes page-fade {
+  from { opacity: 0; }
+}
+.page-in {
+  animation: page-in 240ms cubic-bezier(0.23, 1, 0.32, 1) backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-in { animation: page-fade 150ms ease-out backwards; }
 }

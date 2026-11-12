@@ -6,7 +6,8 @@
     "dev": "NODE_OPTIONS='--no-experimental-strip-types' next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "placeholders": "node scripts/placeholders.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.3.19",
@@ -16,6 +17,7 @@
     "react-dom": "^18.3.1",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "sharp": "^0.33.5",
     "three": "^0.170.0"
   },
   "devDependencies": {

@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [{ source: "/playground", destination: "/lab", permanent: true }];
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
