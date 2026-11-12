@@ -187,9 +187,9 @@ html::-webkit-scrollbar {
 }
 
 /* Browser-chrome edges (components/site/Edges.tsx): two thin fixed strips
-   behind mobile Safari's status bar and toolbar, painted the colour just
-   inside each edge. The Shell pads its content by the same heights, so
-   nothing sits under them. */
+   behind mobile Safari's status bar and toolbar: the top in the page's
+   ground, the bottom in the bumper's black. The Shell pads its content by
+   the same heights, so nothing sits under them. */
 :root {
   --edge-top-h: max(12px, env(safe-area-inset-top));
   --edge-bottom-h: max(12px, env(safe-area-inset-bottom));
@@ -217,21 +217,15 @@ html::-webkit-scrollbar {
   inset: 0;
 }
 .edge-top::after {
-  background-color: var(--edge-top-background, #121212);
+  background-color: var(--edge-top-background, var(--edge-fallback));
 }
 .edge-bottom::after {
-  background-color: var(--edge-bottom-background, var(--edge-ground));
+  background-color: var(--edge-bottom-background, var(--edge-fallback));
 }
-/* Snap when scrolling past a band; crossfade with the ground on a new section. */
+/* Crossfade with the Shell's ground when the section changes. */
 :root[data-edges],
 :root[data-edges] body,
 :root[data-edges] .edge-top::after,
 :root[data-edges] .edge-bottom::after {
-  transition: none;
-}
-:root[data-edge-fade],
-:root[data-edge-fade] body,
-:root[data-edge-fade] .edge-top::after,
-:root[data-edge-fade] .edge-bottom::after {
   transition: background-color 400ms ease-out;
 }

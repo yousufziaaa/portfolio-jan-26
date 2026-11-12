@@ -16,9 +16,9 @@ import {
 import GeoField from "@/components/site/GeoField";
 import EdgeStrips from "@/components/site/Edges";
 import { SHOW_WRITING } from "@/lib/flags";
-import { StarMark } from "@/components/site/Ornament";
+import { STAR_PITCH, starRowStyle } from "@/components/site/Ornament";
 import { navFace, navType } from "@/components/site/type";
-import { Bumper, Jhalar } from "@/components/site/TruckArt";
+import { BLACK, Bumper, Jhalar } from "@/components/site/TruckArt";
 import { initSound, onSoundChange, setSound, tick } from "@/components/site/sound";
 import { CASE_GROUND, COMPANY, DEFAULT_PLATE, PATTERN, THEMES, mixHex, themeFor, type Section } from "@/components/site/palette";
 
@@ -81,7 +81,6 @@ export default function Shell({
   pattern?: number;
 }) {
   const columnRef = useRef<HTMLDivElement>(null);
-  const mainRef = useRef<HTMLElement>(null);
   const [tint, setTint] = useState<string | null>(null);
   const [tone, setTone] = useState<Tone | null>(null);
   const path = usePathname();
@@ -116,24 +115,31 @@ export default function Shell({
   const isActive = (href: string) =>
     href === "/" ? path === "/" || path.startsWith("/projects") : path.startsWith(href);
 
-  // The nav star: one mark that glides to the current item. Until it has
-  // been measured (server render, first paint) it sits inside the active
-  // link instead, in the same spot, so there's no flash.
+  // The nav underline: a row of stars that glides to the current item,
+  // a whole number of stars wide and centred under the label. Until it
+  // has been measured (server render, first paint) it sits inside the
+  // active link instead, in the same spot, so there's no flash.
   const activeHref = NAV.find((n) => isActive(n.href))?.href;
   const activeRef = useRef(activeHref);
   activeRef.current = activeHref;
   const navRef = useRef<HTMLElement>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
-  const [star, setStar] = useState<{ x: number; y: number; on: boolean; glide: boolean } | null>(null);
+  const [star, setStar] = useState<{ x: number; y: number; w: number; on: boolean; glide: boolean } | null>(null);
   const placeStar = useCallback((glide: boolean) => {
     const href = activeRef.current;
     const el = href ? linkRefs.current[href] : null;
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setStar((prev) =>
-      el
-        ? { x: el.offsetLeft - 14, y: el.offsetTop + el.offsetHeight / 2, on: true, glide: glide && !still && !!prev?.on }
-        : prev && { ...prev, on: false, glide: false },
-    );
+    setStar((prev) => {
+      if (!el) return prev && { ...prev, on: false, glide: false };
+      const w = Math.max(1, Math.floor(el.offsetWidth / STAR_PITCH)) * STAR_PITCH;
+      return {
+        x: Math.round(el.offsetLeft + (el.offsetWidth - w) / 2),
+        y: el.offsetTop + el.offsetHeight + 2,
+        w,
+        on: true,
+        glide: glide && !still && !!prev?.on,
+      };
+    });
   }, []);
   useIsoLayoutEffect(() => placeStar(true), [activeHref, placeStar]);
   // Re-measure, without gliding, when the nav's size or font changes.
@@ -167,7 +173,7 @@ export default function Shell({
 
   return (
     <ShellContext.Provider value={{ setTint, setTone }}>
-      <main ref={mainRef} className="relative isolate flex min-h-[100svh] flex-col text-ink antialiased" style={vars}>
+      <main className="relative isolate flex min-h-[100svh] flex-col text-ink antialiased" style={vars}>
         <GeoField
           mode="lattice"
           ink={latticeInk}
@@ -207,11 +213,13 @@ export default function Shell({
                   active ? "text-ink" : "text-ink-3 hover:text-ink"
                 }`}
               >
-                {/* Hangs left of the label so nothing shifts between pages. */}
+                {/* Hangs below the label so nothing shifts between pages. */}
                 {active && !star && (
-                  <span className="absolute -left-[14px] top-1/2 -translate-y-1/2">
-                    <StarMark colour="var(--ink)" size={9} />
-                  </span>
+                  <span
+                    aria-hidden
+                    className="absolute left-1/2 top-[calc(100%+2px)] -translate-x-1/2"
+                    style={{ ...starRowStyle("var(--ink)"), width: `round(down, 100%, ${STAR_PITCH}px)` }}
+                  />
                 )}
                 {n.label}
               </Link>
@@ -220,15 +228,18 @@ export default function Shell({
           {star && (
             <span
               aria-hidden
-              className="pointer-events-none absolute left-0 top-0 flex"
+              className="pointer-events-none absolute left-0 top-0"
               style={{
-                transform: `translate(${star.x}px, ${star.y}px) translateY(-50%)`,
+                ...starRowStyle("var(--ink)"),
+                width: star.w,
+                transform: `translate(${star.x}px, ${star.y}px)`,
                 opacity: star.on ? 1 : 0,
-                transition: star.glide ? "transform 220ms cubic-bezier(0.23, 1, 0.32, 1)" : "none",
+                // The ink fades with the lettering when the section changes.
+                transition: star.glide
+                  ? "transform 220ms cubic-bezier(0.23, 1, 0.32, 1), width 220ms cubic-bezier(0.23, 1, 0.32, 1), background-color 300ms ease"
+                  : "background-color 300ms ease",
               }}
-            >
-              <StarMark colour="var(--ink)" size={9} />
-            </span>
+            />
           )}
           <button
             type="button"
@@ -256,7 +267,8 @@ export default function Shell({
         <Bumper />
       </main>
       {/* Outside main (and any transformed ancestor) so they stay fixed to the viewport. */}
-      <EdgeStrips ground={ground} rootRef={mainRef} />
+      {/* Top in the ground; bottom carries on the bumper's black. */}
+      <EdgeStrips top={ground} bottom={BLACK} />
     </ShellContext.Provider>
   );
 }
