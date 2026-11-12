@@ -3,12 +3,15 @@
 import Link from "next/link";
 import CenterUnderline from "@/components/fancy/text/underline-center";
 import { TextHighlighter } from "@/components/fancy/text/text-highlighter";
+import DrawUnderline from "@/components/site/DrawUnderline";
 
 interface ParagraphWithLinksProps {
   text: string;
+  /** When set, highlights become an underline in this colour that draws in on scroll. */
+  tone?: string;
 }
 
-export default function ParagraphWithLinks({ text }: ParagraphWithLinksProps) {
+export default function ParagraphWithLinks({ text, tone }: ParagraphWithLinksProps) {
   // Check if text contains "View the current site here."
   if (text.includes("View the current site here.")) {
     const parts = text.split("View the current site here.");
@@ -106,9 +109,15 @@ export default function ParagraphWithLinks({ text }: ParagraphWithLinksProps) {
           }
           if (index < splitParts.length - 1) {
             newParts.push(
-              <TextHighlighter key={`${phrase}-${index}`} className="rounded-[0.3em] px-px">
-                {phrase}
-              </TextHighlighter>
+              tone ? (
+                <DrawUnderline key={`${phrase}-${index}`} colour={tone}>
+                  {phrase}
+                </DrawUnderline>
+              ) : (
+                <TextHighlighter key={`${phrase}-${index}`} className="rounded-[0.3em] px-px">
+                  {phrase}
+                </TextHighlighter>
+              )
             );
           }
         });

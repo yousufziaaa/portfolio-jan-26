@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
 
-const postsDir = path.join(process.cwd(), "app/writing/posts");
+const postsDir = path.join(process.cwd(), "content/writing");
 
 export type PostMeta = {
   slug: string;
@@ -42,4 +42,13 @@ export async function getPost(slug: string): Promise<Post> {
     date: data.date as string,
     contentHtml: processed.toString(),
   };
+}
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/** "03/24/26" (MM/DD/YY, as posts are dated) to "Mar '26". */
+export function shortDate(date: string) {
+  const [m, , y] = date.split("/");
+  const month = MONTHS[parseInt(m, 10) - 1];
+  return month && y ? `${month} '${y}` : date;
 }

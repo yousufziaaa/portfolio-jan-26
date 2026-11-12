@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-import { departureMono, neueMachina } from "./fonts";
+import { departureMono, fragmentMono, reemKufi, nastaliq, bricolage, fraunces, gloock, geist, instrumentSans, instrumentSerif, inter, neueMachina } from "./fonts";
 
 // Get the site URL from environment variable or use a default
 // For production, set NEXT_PUBLIC_SITE_URL in your environment variables
@@ -48,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${departureMono.variable} ${neueMachina.variable} antialiased`}>
+      <body className={`${departureMono.variable} ${neueMachina.variable} ${instrumentSerif.variable} ${inter.variable} ${geist.variable} ${instrumentSans.variable} ${fragmentMono.variable} ${reemKufi.variable} ${nastaliq.variable} ${bricolage.variable} ${fraunces.variable} ${gloock.variable} antialiased`}>
         <Script
           defer
           src="https://cloud.umami.is/script.js"

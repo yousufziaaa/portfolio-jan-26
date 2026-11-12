@@ -1,0 +1,5 @@
+# Neither needs its install script: sharp ships prebuilt binaries
+# (@img/sharp-*), and unrs-resolver's postinstall is only a fallback.
+allowBuilds:
+  sharp: false
+  unrs-resolver: false
