@@ -14,6 +14,7 @@ import {
   type ReactNode,
 } from "react";
 import GeoField from "@/components/site/GeoField";
+import EdgeStrips from "@/components/site/Edges";
 import { SHOW_WRITING } from "@/lib/flags";
 import { StarMark } from "@/components/site/Ornament";
 import { navFace, navType } from "@/components/site/type";
@@ -80,6 +81,7 @@ export default function Shell({
   pattern?: number;
 }) {
   const columnRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
   const [tint, setTint] = useState<string | null>(null);
   const [tone, setTone] = useState<Tone | null>(null);
   const path = usePathname();
@@ -155,6 +157,9 @@ export default function Shell({
     backgroundColor: ground,
     backgroundImage: `radial-gradient(${theme.dot} 0.9px, transparent 1.3px)`,
     backgroundSize: "4px 4px",
+    // Clear of the fixed edge strips (and so the notch and home indicator).
+    paddingTop: "var(--edge-top-h)",
+    paddingBottom: "var(--edge-bottom-h)",
     // The type lab can swap these via --site-font.
     fontFamily: "var(--site-font, var(--font-geist))",
     transition: "background-color 400ms ease-out, color 400ms ease-out",
@@ -162,7 +167,7 @@ export default function Shell({
 
   return (
     <ShellContext.Provider value={{ setTint, setTone }}>
-      <main className="relative isolate flex min-h-[100svh] flex-col text-ink antialiased" style={vars}>
+      <main ref={mainRef} className="relative isolate flex min-h-[100svh] flex-col text-ink antialiased" style={vars}>
         <GeoField
           mode="lattice"
           ink={latticeInk}
@@ -178,9 +183,15 @@ export default function Shell({
         <nav
           ref={navRef}
           aria-label="Site"
-          className={`absolute left-[max(24px,calc(50%-236px))] right-[max(24px,calc(50%-236px))] top-[54px] z-20 flex items-baseline gap-[30px] ${navType}`}
-          // Set in the title face so the nav and the name read as one sign.
-          style={navFace}
+          className={`absolute z-20 flex items-baseline gap-[30px] ${navType}`}
+          // Set in the title face so the nav and the name read as one sign;
+          // kept inside the safe area in landscape.
+          style={{
+            ...navFace,
+            top: "calc(54px + var(--edge-top-h))",
+            left: "max(24px, env(safe-area-inset-left), 50% - 236px)",
+            right: "max(24px, env(safe-area-inset-right), 50% - 236px)",
+          }}
         >
           {NAV.map((n) => {
             const active = isActive(n.href);
@@ -230,13 +241,22 @@ export default function Shell({
         </nav>
 
         <div className="flex-1 pt-[52px]">
-          <div ref={columnRef} className="mx-auto w-full max-w-[520px] px-6 pb-14 pt-[clamp(28px,6svh,64px)]">
+          <div
+            ref={columnRef}
+            className="mx-auto w-full max-w-[520px] pb-14 pt-[clamp(28px,6svh,64px)]"
+            style={{
+              paddingLeft: "max(24px, env(safe-area-inset-left))",
+              paddingRight: "max(24px, env(safe-area-inset-right))",
+            }}
+          >
             {children}
           </div>
         </div>
 
         <Bumper />
       </main>
+      {/* Outside main (and any transformed ancestor) so they stay fixed to the viewport. */}
+      <EdgeStrips ground={ground} rootRef={mainRef} />
     </ShellContext.Provider>
   );
 }

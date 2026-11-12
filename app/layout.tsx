@@ -5,18 +5,19 @@ import { departureMono, fragmentMono, reemKufi, nastaliq, bricolage, fraunces, g
 
 // Get the site URL from environment variable or use a default
 // For production, set NEXT_PUBLIC_SITE_URL in your environment variables
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+// (Netlify sets URL at build time to the site's main address.)
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
 export const metadata: Metadata = {
   title: "Yousuf Zia | Product Designer x Engineer",
   description: "Modern portfolio website showcasing creative design and development work",
   keywords: ["portfolio", "design", "development", "web design", "UI/UX"],
   authors: [{ name: "Yousuf Zia" }],
-  icons: {
-    icon: "/favicon-portfolio.png",
-    shortcut: "/favicon-portfolio.png",
-  },
+  // Icons come from app/icon.svg, app/favicon.ico and app/apple-icon.png.
+  // scripts/brand.mjs builds them, along with public/og.png and og.mp4.
   metadataBase: new URL(siteUrl),
   openGraph: {
     title: "Yousuf Zia | Product Designer x Engineer",
@@ -26,18 +27,22 @@ export const metadata: Metadata = {
     siteName: "Yousuf Zia | Product Designer x Engineer",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Yousuf Zia | Product Designer x Engineer",
+        alt: "Yousuf Zia, in English and Urdu, on a green truck-art poster",
       },
     ],
+    // The same card as a 12s loop (the Urdu written in, colour sweeping the
+    // lattice); og.png stays the still for platforms that don't play video.
+    // (Next doesn't resolve video URLs against metadataBase, so it's absolute here.)
+    videos: [{ url: new URL("/og.mp4", siteUrl).toString(), width: 1200, height: 630, type: "video/mp4" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Yousuf Zia | Product Designer x Engineer",
     description: "Modern portfolio website showcasing creative design and development work",
-    images: ["/og-image.png"],
+    images: ["/og.png"],
   },
 };
 
