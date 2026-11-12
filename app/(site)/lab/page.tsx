@@ -1,8 +1,7 @@
 import FadeImage from "@/components/site/FadeImage";
 import { preview } from "@/lib/placeholders";
 import PageTitle from "@/components/site/PageTitle";
-import { Row, RowList } from "@/components/site/Row";
-import { experiments, shots } from "@/data/lab";
+import { shots } from "@/data/lab";
 
 export const metadata = { title: "Lab" };
 
@@ -11,19 +10,11 @@ export default function LabPage() {
     <>
       <PageTitle urdu="تجربہ گاہ">Lab</PageTitle>
       <p className="mt-9 text-[15px] leading-[1.65] text-ink-2">
-        Experiments and things I&apos;ve built for fun, mostly to see if they&apos;d work.
+        I&apos;ve been working on a lot of fun stuff in the lab recently. I&apos;m still working on polishing them, but
+        they&apos;ll be here soon :) In the meanwhile, here are some snippets from my work over the last few years.
       </p>
 
-      <RowList label="Experiments" className="mt-12">
-        {experiments.map((e) => (
-          <Row key={e.slug} href={e.href} colour={e.colour} title={e.title} note={e.description} meta={e.year} />
-        ))}
-      </RowList>
-
-      <section className="mt-12">
-        <h2 className="mb-3 text-[13px] font-normal tracking-normal text-ink-3" style={{ fontFamily: "inherit" }}>
-          Shots
-        </h2>
+      <section aria-label="Snippets" className="mt-10">
         <div className="grid grid-cols-2 gap-2">
           {shots.map((s) => (
             <div key={s.src} className="relative aspect-[4/3] overflow-hidden rounded-[4px] bg-black/10">
