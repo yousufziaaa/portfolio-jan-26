@@ -18,6 +18,11 @@ import { clink } from "@/components/site/sound";
 const COLOURS = ["#d9432b", "#ef9a2a", "#ffe066", "#2f4fd1", "#ff8fc1", "#1f7a46"];
 const COUNT = 170; // enough pendants for a 2700px-wide screen; extras are clipped
 const PITCH = 16;
+// The black of the rail and bumper, and the bumper's pinstripes. Bands
+// carry their colour in data-edge so the browser chrome can match them
+// when they meet the screen edge (components/site/Edges.tsx).
+const BLACK = "#121212";
+const STRIPES = ["#d9432b", "#ffe066", "#1f7a46"];
 
 // Pendant shapes, each drawn in a 10x12 box hanging from its top centre.
 function Pendant({ kind, colour }: { kind: number; colour: string }) {
@@ -167,8 +172,10 @@ export function Jhalar() {
     <div ref={wrapRef} aria-hidden className="relative h-[36px] shrink-0 overflow-hidden">
       {/* The rail: a black band picked out with cream dots. */}
       <div
-        className="absolute inset-x-0 top-0 h-[6px] bg-[#121212]"
+        data-edge={BLACK}
+        className="absolute inset-x-0 top-0 h-[6px]"
         style={{
+          backgroundColor: BLACK,
           backgroundImage: "radial-gradient(#f5f0e4 1.4px, transparent 1.6px)",
           backgroundSize: "8px 6px",
         }}
@@ -206,12 +213,14 @@ export function Bumper() {
   return (
     <div className="shrink-0">
       {/* Painted pinstripes. */}
-      <div className="h-[3px] bg-[#d9432b]" />
-      <div className="h-[3px] bg-[#ffe066]" />
-      <div className="h-[3px] bg-[#1f7a46]" />
+      {STRIPES.map((c) => (
+        <div key={c} data-edge={c} className="h-[3px]" style={{ backgroundColor: c }} />
+      ))}
       <div
-        className="relative flex h-[58px] items-center justify-center gap-4 overflow-hidden bg-[#121212]"
+        data-edge={BLACK}
+        className="relative flex h-[58px] items-center justify-center gap-4 overflow-hidden"
         style={{
+          backgroundColor: BLACK,
           backgroundImage:
             "radial-gradient(#f5f0e4 1.3px, transparent 1.5px), radial-gradient(#f5f0e4 1.3px, transparent 1.5px)",
           backgroundSize: "10px 6px, 10px 6px",
