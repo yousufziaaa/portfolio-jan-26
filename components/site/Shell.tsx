@@ -16,7 +16,7 @@ import {
 import GeoField from "@/components/site/GeoField";
 import EdgeStrips from "@/components/site/Edges";
 import { SHOW_WRITING } from "@/lib/flags";
-import { STAR_PITCH, starRowStyle } from "@/components/site/Ornament";
+import { StarMark } from "@/components/site/Ornament";
 import { navFace, navType } from "@/components/site/type";
 import { BLACK, Bumper, Jhalar } from "@/components/site/TruckArt";
 import { initSound, onSoundChange, setSound, tick } from "@/components/site/sound";
@@ -38,6 +38,13 @@ const NAV = [
   { href: "/lab", label: "Lab" },
   { href: "/about", label: "About" },
 ];
+
+// The nav underline's stars: size, gap, and enough for the longest label.
+const STAR = 7;
+const STAR_GAP = 3;
+const STAR_PITCH = STAR + STAR_GAP;
+const STAR_MAX = 8;
+const GLIDE = "280ms cubic-bezier(0.23, 1, 0.32, 1)";
 
 // useLayoutEffect warns during server rendering; this is the usual dodge.
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
@@ -115,27 +122,36 @@ export default function Shell({
   const isActive = (href: string) =>
     href === "/" ? path === "/" || path.startsWith("/projects") : path.startsWith(href);
 
-  // The nav underline: a row of stars that glides to the current item,
-  // a whole number of stars wide and centred under the label. Until it
-  // has been measured (server render, first paint) it sits inside the
-  // active link instead, in the same spot, so there's no flash.
+  // The nav underline: as many stars as fit under the current label,
+  // centred, gliding over to the next item. Until it has been measured
+  // (server render, first paint) it sits inside the active link instead,
+  // in the same spot, so there's no flash.
   const activeHref = NAV.find((n) => isActive(n.href))?.href;
   const activeRef = useRef(activeHref);
   activeRef.current = activeHref;
   const navRef = useRef<HTMLElement>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
-  const [star, setStar] = useState<{ x: number; y: number; w: number; on: boolean; glide: boolean } | null>(null);
+  const [star, setStar] = useState<{
+    x: number;
+    y: number;
+    n: number;
+    dir: number;
+    on: boolean;
+    glide: boolean;
+  } | null>(null);
   const placeStar = useCallback((glide: boolean) => {
     const href = activeRef.current;
     const el = href ? linkRefs.current[href] : null;
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setStar((prev) => {
       if (!el) return prev && { ...prev, on: false, glide: false };
-      const w = Math.max(1, Math.floor(el.offsetWidth / STAR_PITCH)) * STAR_PITCH;
+      const n = Math.min(STAR_MAX, Math.max(1, Math.floor((el.offsetWidth + STAR_GAP) / STAR_PITCH)));
+      const x = Math.round(el.offsetLeft + (el.offsetWidth - (n * STAR_PITCH - STAR_GAP)) / 2);
       return {
-        x: Math.round(el.offsetLeft + (el.offsetWidth - w) / 2),
+        x,
         y: el.offsetTop + el.offsetHeight + 2,
-        w,
+        n,
+        dir: prev && x < prev.x ? -1 : 1,
         on: true,
         glide: glide && !still && !!prev?.on,
       };
@@ -169,6 +185,9 @@ export default function Shell({
     // The type lab can swap these via --site-font.
     fontFamily: "var(--site-font, var(--font-geist))",
     transition: "background-color 400ms ease-out, color 400ms ease-out",
+    // Keeps the fixed lattice canvas inside the page, so it doesn't draw
+    // over the gap when Safari rubber-bands past either end.
+    clipPath: "inset(0)",
   } as CSSProperties;
 
   return (
@@ -214,33 +233,48 @@ export default function Shell({
                 }`}
               >
                 {/* Hangs below the label so nothing shifts between pages. */}
+                {/* Stars that don't fit wrap onto a hidden second line. */}
                 {active && !star && (
                   <span
                     aria-hidden
-                    className="absolute left-1/2 top-[calc(100%+2px)] -translate-x-1/2"
-                    style={{ ...starRowStyle("var(--ink)"), width: `round(down, 100%, ${STAR_PITCH}px)` }}
-                  />
+                    className="absolute inset-x-0 top-[calc(100%+2px)] flex flex-wrap justify-center overflow-hidden"
+                    style={{ height: STAR, columnGap: STAR_GAP }}
+                  >
+                    {Array.from({ length: STAR_MAX }, (_, i) => (
+                      <StarMark key={i} colour="var(--ink)" size={STAR} />
+                    ))}
+                  </span>
                 )}
                 {n.label}
               </Link>
             );
           })}
-          {star && (
-            <span
-              aria-hidden
-              className="pointer-events-none absolute left-0 top-0"
-              style={{
-                ...starRowStyle("var(--ink)"),
-                width: star.w,
-                transform: `translate(${star.x}px, ${star.y}px)`,
-                opacity: star.on ? 1 : 0,
-                // The ink fades with the lettering when the section changes.
-                transition: star.glide
-                  ? "transform 220ms cubic-bezier(0.23, 1, 0.32, 1), width 220ms cubic-bezier(0.23, 1, 0.32, 1), background-color 300ms ease"
-                  : "background-color 300ms ease",
-              }}
-            />
-          )}
+          {/* Each star glides on its own (transform and opacity only, so it
+              stays smooth while the next page renders). The one on the side
+              we're heading leads and the rest follow a beat apart; stars the
+              next label doesn't need shrink into the last one. */}
+          {star &&
+            Array.from({ length: STAR_MAX }, (_, i) => {
+              const shown = i < star.n;
+              const slot = Math.min(i, star.n - 1);
+              const order = star.dir > 0 ? star.n - 1 - slot : slot;
+              return (
+                <span
+                  key={i}
+                  aria-hidden
+                  className="pointer-events-none absolute left-0 top-0 flex"
+                  style={{
+                    transform: `translate(${star.x + slot * STAR_PITCH}px, ${star.y}px) scale(${shown ? 1 : 0.3})`,
+                    opacity: star.on && shown ? 1 : 0,
+                    transition: star.glide
+                      ? `transform ${GLIDE} ${order * 18}ms, opacity 180ms ease-out ${order * 18}ms`
+                      : "none",
+                  }}
+                >
+                  <StarMark colour="var(--ink)" size={STAR} />
+                </span>
+              );
+            })}
           <button
             type="button"
             onClick={() => setSound(!sound)}

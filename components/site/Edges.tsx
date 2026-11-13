@@ -12,8 +12,12 @@ import { useEffect, useLayoutEffect, useRef, type CSSProperties } from "react";
  * the bottom in the bumper's black.
  *
  * The values go to the strips (via --edge-top-background /
- * --edge-bottom-background), the html (top) and body (bottom) backgrounds,
- * and the theme-color meta tag (top), and follow the ground as it changes.
+ * --edge-bottom-background), the body (bottom), the theme-color meta tag
+ * (top), and the html background, which is what Safari shows when you
+ * pull past either end of the page. That one swaps with scroll position:
+ * the top colour in the upper half, so the bounce above the jhalar is
+ * ground, and the bottom in the lower half, so the bounce below the
+ * bumper carries on its black.
  */
 
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
@@ -36,7 +40,20 @@ export default function EdgeStrips({ top, bottom }: { top: string; bottom: strin
     const savedMeta = findMeta()?.content;
     let created: HTMLMetaElement | null = null;
     let current = "";
+    let under = { top: "", bottom: "" };
     html.setAttribute("data-edges", "");
+
+    // Past halfway, or rubber-banding past the end (scrollY beyond max),
+    // the next bounce will be at the bottom.
+    let painted = "";
+    const paintUnder = () => {
+      const max = html.scrollHeight - window.innerHeight;
+      const colour = window.scrollY > max / 2 ? under.bottom : under.top;
+      if (colour && colour !== painted) html.style.backgroundColor = painted = colour;
+    };
+    window.addEventListener("scroll", paintUnder, { passive: true });
+    window.addEventListener("resize", paintUnder);
+    window.addEventListener("pageshow", paintUnder);
 
     const setMeta = () => {
       let meta = findMeta();
@@ -56,14 +73,18 @@ export default function EdgeStrips({ top, bottom }: { top: string; bottom: strin
       current = t;
       html.style.setProperty("--edge-top-background", t);
       html.style.setProperty("--edge-bottom-background", b);
-      html.style.backgroundColor = t;
       body.style.backgroundColor = b;
+      under = { top: t, bottom: b };
+      paintUnder();
       setMeta();
     };
 
     return () => {
       applyRef.current = () => {};
       mo.disconnect();
+      window.removeEventListener("scroll", paintUnder);
+      window.removeEventListener("resize", paintUnder);
+      window.removeEventListener("pageshow", paintUnder);
       html.style.setProperty("--edge-top-background", saved.top);
       html.style.setProperty("--edge-bottom-background", saved.bottom);
       html.style.backgroundColor = saved.htmlBg;
