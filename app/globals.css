@@ -222,8 +222,11 @@ html::-webkit-scrollbar {
 .edge-bottom::after {
   background-color: var(--edge-bottom-background, var(--edge-fallback));
 }
-/* Crossfade with the Shell's ground when the section changes. */
-:root[data-edges],
+/* Crossfade with the Shell's ground when the section changes. The html
+   background (Safari's overscroll colour) swaps instantly with scroll. */
+:root[data-edges] {
+  transition: none;
+}
 :root[data-edges] body,
 :root[data-edges] .edge-top::after,
 :root[data-edges] .edge-bottom::after {

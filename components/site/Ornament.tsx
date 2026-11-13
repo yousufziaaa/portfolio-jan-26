@@ -1,4 +1,4 @@
-import { useId, type CSSProperties } from "react";
+import { useId } from "react";
 
 /** Eight-pointed star, sharp enough to read at 11px. */
 const STAR_POINTS = Array.from({ length: 16 }, (_, i) => {
@@ -13,25 +13,6 @@ export function StarMark({ colour, size = 11 }: { colour: string; size?: number 
       <polygon points={STAR_POINTS} style={{ fill: colour }} />
     </svg>
   );
-}
-
-/** A row of stars, one every STAR_PITCH px: the nav's underline. */
-export const STAR_PITCH = 8;
-const STAR_ROW_H = 5;
-const STAR_MASK = `url("data:image/svg+xml,${encodeURIComponent(
-  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='-10 -10 20 20'><polygon points='${STAR_POINTS}'/></svg>`,
-)}")`;
-export function starRowStyle(colour: string): CSSProperties {
-  return {
-    height: STAR_ROW_H,
-    backgroundColor: colour,
-    WebkitMaskImage: STAR_MASK,
-    maskImage: STAR_MASK,
-    WebkitMaskSize: `${STAR_PITCH}px ${STAR_ROW_H}px`,
-    maskSize: `${STAR_PITCH}px ${STAR_ROW_H}px`,
-    WebkitMaskRepeat: "repeat-x",
-    maskRepeat: "repeat-x",
-  };
 }
 
 const HEM_COLOURS = ["#d9432b", "#ef9a2a", "#ffe066", "#2f4fd1", "#ff8fc1", "#6e2c43"];
