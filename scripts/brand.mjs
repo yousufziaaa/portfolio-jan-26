@@ -1,6 +1,6 @@
 // Builds the favicon set and the Open Graph card from the site's own parts:
 // the poster green, the eight-pointed star, the ASCII star-and-cross lattice,
-// the jhalar fringe and the painted bumper.
+// and the jhalar fringe.
 //
 //   node scripts/brand.mjs            write into app/ and public/
 //   node scripts/brand.mjs <dir>      write everything into <dir> to review
@@ -44,7 +44,6 @@ function star(cx, cy, r, inner = 0.52) {
 const FACES = {
   title: "BricolageGrotesque-Variable.ttf",
   kufi: "ReemKufi-Variable.ttf",
-  nastaliq: "NotoNastaliqUrdu-Variable.ttf",
   mono: "FragmentMono-Regular.ttf",
 };
 let runs = 0;
@@ -232,7 +231,7 @@ function jhalar(t) {
 const LOOP = 12;
 const FPS = 30;
 const SWAY = 2; // half a swing, in seconds
-const STILL = 5; // the moment the still image shows
+const STILL = 4.8; // the still: Urdu written, between two tint waves
 const WAVES = ["latent", "nvidia", "groq", "phia", "klarify"];
 const WRITE_FROM = 0.5;
 const WRITE_FOR = 3.2;
@@ -477,12 +476,12 @@ async function card() {
   const en = await shape("Yousuf Zia", { face: "title", size, axes: { wght: 600, opsz: 48 }, spacing: -0.025 * size });
   const ur = await shape("یوسف ضیاء", { face: "kufi", size: urSize, axes: { wght: 700 } });
   const jhalarBottom = 36 * S;
-  const bumperTop = H - 67 * S;
-  // Centre the pair (English cap height to the Urdu's tails) between the trims.
+  // Centre the pair (English cap height to the Urdu's tails) in the green
+  // below the fringe.
   const lineGap = 0.82 * size;
   const top = -0.7 * size;
   const bottom = lineGap + 0.3 * urSize;
-  const enBase = Math.round((jhalarBottom + bumperTop) / 2 - (top + bottom) / 2);
+  const enBase = Math.round((jhalarBottom + H) / 2 - (top + bottom) / 2);
   const urBase = enBase + lineGap;
   const enX = (W - en.w) / 2;
   const urX = (W - ur.w) / 2;
@@ -518,18 +517,6 @@ async function card() {
       .join("");
   }
 
-  // The bumper: pinstripes, a dotted black panel, stars either side of the
-  // slogan «دیکھ مگر پیار سے», "look, but with love".
-  const by = bumperTop + 9 * S;
-  const mid = by + (H - by) / 2;
-  const slogan = await shape("دیکھ مگر پیار سے", { face: "nastaliq", size: 22 * S, axes: { wght: 400 } });
-  text.push(slogan.draw(W / 2 - slogan.w / 2, mid + 6, "#ffd23f"));
-  const gutter = slogan.w / 2 + 22 * S;
-  const stars = (from, dir) =>
-    ["#ff8fc1", "#ffe066", "#9fdcff"]
-      .map((c, i) => `<polygon points="${star(from + dir * i * 15 * S, mid, 5 * S)}" fill="${c}"/>`)
-      .join("");
-
   const head = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>
     <pattern id="halftone" width="4" height="4" patternUnits="userSpaceOnUse">
@@ -538,22 +525,11 @@ async function card() {
     <pattern id="rail" width="8" height="6" patternUnits="userSpaceOnUse">
       <circle cx="4" cy="3" r="1.4" fill="${CREAM}"/>
     </pattern>
-    <pattern id="bumperDots" width="${10 * S}" height="${H - by}" patternUnits="userSpaceOnUse" y="${by}">
-      <circle cx="${5 * S}" cy="${4 * S}" r="${1.3 * S}" fill="${CREAM}"/>
-      <circle cx="${5 * S}" cy="${H - by - 4 * S}" r="${1.3 * S}" fill="${CREAM}"/>
-    </pattern>
     ${defs.join("")}
   </defs>
   <rect width="${W}" height="${H}" fill="${GROUND}"/>
   <rect width="${W}" height="${H}" fill="url(#halftone)"/>`;
-  const tail = `<rect y="${bumperTop}" width="${W}" height="${3 * S}" fill="#d9432b"/>
-  <rect y="${bumperTop + 3 * S}" width="${W}" height="${3 * S}" fill="#ffe066"/>
-  <rect y="${bumperTop + 6 * S}" width="${W}" height="${3 * S}" fill="#1f7a46"/>
-  <rect y="${by}" width="${W}" height="${H - by}" fill="${INK}"/>
-  <rect y="${by}" width="${W}" height="${H - by}" fill="url(#bumperDots)"/>
-  ${stars(W / 2 - gutter, -1)}
-  ${stars(W / 2 + gutter, 1)}
-  ${text.join("")}
+  const tail = `${text.join("")}
 </svg>`;
   return (t, format = "png") => {
     const img = sharp(Buffer.from(head + lattice(t) + jhalar(t) + tail.replace("</svg>", urdu(t) + "</svg>")));

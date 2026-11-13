@@ -12,7 +12,7 @@ const siteUrl =
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
 export const metadata: Metadata = {
-  title: "Yousuf Zia | Product Designer x Engineer",
+  title: "designing the details",
   description: "Modern portfolio website showcasing creative design and development work",
   keywords: ["portfolio", "design", "development", "web design", "UI/UX"],
   authors: [{ name: "Yousuf Zia" }],
@@ -20,11 +20,11 @@ export const metadata: Metadata = {
   // scripts/brand.mjs builds them, along with public/og.png and og.mp4.
   metadataBase: new URL(siteUrl),
   openGraph: {
-    title: "Yousuf Zia | Product Designer x Engineer",
+    title: "designing the details",
     description: "Modern portfolio website showcasing creative design and development work",
     type: "website",
     url: siteUrl,
-    siteName: "Yousuf Zia | Product Designer x Engineer",
+    siteName: "Yousuf Zia",
     images: [
       {
         url: "/og.png",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Yousuf Zia | Product Designer x Engineer",
+    title: "designing the details",
     description: "Modern portfolio website showcasing creative design and development work",
     images: ["/og.png"],
   },
