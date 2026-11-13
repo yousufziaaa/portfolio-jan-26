@@ -3,25 +3,24 @@ import Script from "next/script";
 import "./globals.css";
 import { departureMono, fragmentMono, reemKufi, nastaliq, bricolage, fraunces, gloock, geist, instrumentSans, instrumentSerif, inter, neueMachina } from "./fonts";
 
-// Get the site URL from environment variable or use a default
-// For production, set NEXT_PUBLIC_SITE_URL in your environment variables
-// (Netlify sets URL at build time to the site's main address.)
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  process.env.URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+// The address share cards and crawlers resolve against. Defaults to the
+// live domain (not the host's preview URL, and never localhost, which no
+// crawler can fetch); set NEXT_PUBLIC_SITE_URL to override.
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yousufzia.com";
+
+const description =
+  "Currently designing at Latent; previously Nvidia, Groq, Phia and Klarify.";
 
 export const metadata: Metadata = {
   title: "designing the details",
-  description: "Modern portfolio website showcasing creative design and development work",
-  keywords: ["portfolio", "design", "development", "web design", "UI/UX"],
+  description,
   authors: [{ name: "Yousuf Zia" }],
   // Icons come from app/icon.svg, app/favicon.ico and app/apple-icon.png.
   // scripts/brand.mjs builds them, along with public/og.png and og.mp4.
   metadataBase: new URL(siteUrl),
   openGraph: {
     title: "designing the details",
-    description: "Modern portfolio website showcasing creative design and development work",
+    description,
     type: "website",
     url: siteUrl,
     siteName: "Yousuf Zia",
@@ -34,14 +33,16 @@ export const metadata: Metadata = {
       },
     ],
     // The same card as a 12s loop (the Urdu written in, colour sweeping the
-    // lattice); og.png stays the still for platforms that don't play video.
+    // lattice); iMessage plays it inline, and og.png stays the still for
+    // everything else. If LinkedIn keeps filing the page as a video with no
+    // image, serve this to everyone but LinkedInBot.
     // (Next doesn't resolve video URLs against metadataBase, so it's absolute here.)
     videos: [{ url: new URL("/og.mp4", siteUrl).toString(), width: 1200, height: 630, type: "video/mp4" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "designing the details",
-    description: "Modern portfolio website showcasing creative design and development work",
+    description,
     images: ["/og.png"],
   },
 };
