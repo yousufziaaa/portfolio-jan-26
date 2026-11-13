@@ -194,6 +194,15 @@ html::-webkit-scrollbar {
   --edge-top-h: max(12px, env(safe-area-inset-top));
   --edge-bottom-h: max(12px, env(safe-area-inset-bottom));
 }
+/* Mouse and trackpad browsers don't tint anything from the page, so the
+   strips (and the room kept for them) shrink to the safe areas: usually
+   nothing, and the lattice runs to both edges. */
+@media (hover: hover) and (pointer: fine) {
+  :root {
+    --edge-top-h: env(safe-area-inset-top, 0px);
+    --edge-bottom-h: env(safe-area-inset-bottom, 0px);
+  }
+}
 .edge-top,
 .edge-bottom {
   position: fixed;

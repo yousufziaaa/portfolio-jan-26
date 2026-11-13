@@ -98,6 +98,10 @@ export default function Shell({
   const slug = !section && path.startsWith("/projects/") ? path.split("/")[2] : "";
   const caseGround = CASE_GROUND[slug];
   const ground = tone?.ground ?? caseGround ?? theme.bg;
+  // Only the home page ends on the painted bumper; every other page runs
+  // out in its own ground, browser chrome included. (The type lab shows
+  // it whenever it's previewing the home section.)
+  const bumper = section ? section === "work" : path === "/";
   const latticeInk =
     tone?.lattice ?? (caseGround ? mixHex(caseGround, COMPANY[slug] ?? DEFAULT_PLATE, 0.4) : theme.lattice);
 
@@ -109,8 +113,10 @@ export default function Shell({
   useEffect(() => {
     const off = onSoundChange(setSoundState);
     initSound();
+    // The sound toggle plays its own tick when it turns sound on.
     const onClick = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest("a, button")) tick();
+      const el = (e.target as HTMLElement).closest("a, button");
+      if (el && !el.hasAttribute("data-own-sound")) tick();
     };
     document.addEventListener("click", onClick);
     return () => {
@@ -177,22 +183,30 @@ export default function Shell({
     "--header": theme.ink,
     "--foreground": theme.ink,
     backgroundColor: ground,
-    backgroundImage: `radial-gradient(${theme.dot} 0.9px, transparent 1.3px)`,
-    backgroundSize: "4px 4px",
-    // Clear of the fixed edge strips (and so the notch and home indicator).
+    // Clear of the fixed strips (and so the notch and home indicator). With
+    // the bumper, the bottom strip's room is part of it instead, below.
     paddingTop: "var(--edge-top-h)",
-    paddingBottom: "var(--edge-bottom-h)",
+    paddingBottom: bumper ? 0 : "var(--edge-bottom-h)",
     // The type lab can swap these via --site-font.
     fontFamily: "var(--site-font, var(--font-geist))",
     transition: "background-color 400ms ease-out, color 400ms ease-out",
-    // Keeps the fixed lattice canvas inside the page, so it doesn't draw
-    // over the gap when Safari rubber-bands past either end.
-    clipPath: "inset(0)",
+    // Under the bumper the bounce gap is black, so keep the fixed lattice
+    // canvas inside the page there. Elsewhere the gap is the page's own
+    // ground and the lattice carries on into it.
+    clipPath: bumper ? "inset(0)" : undefined,
   } as CSSProperties;
 
   return (
     <ShellContext.Provider value={{ setTint, setTone }}>
       <main className="relative isolate flex min-h-[100svh] flex-col text-ink antialiased" style={vars}>
+        {/* The halftone screen, fixed to the screen like the lattice (the page
+            scrolls over both), so it also fills the gap when the page
+            rubber-bands past either end. */}
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 -z-10"
+          style={{ backgroundImage: `radial-gradient(${theme.dot} 0.9px, transparent 1.3px)`, backgroundSize: "4px 4px" }}
+        />
         <GeoField
           mode="lattice"
           ink={latticeInk}
@@ -279,7 +293,8 @@ export default function Shell({
             type="button"
             onClick={() => setSound(!sound)}
             aria-pressed={sound}
-            className="ml-auto text-[14px] text-ink-3 outline-none transition-colors duration-150 ease-out hover:text-ink focus-visible:underline"
+            data-own-sound
+            className="ml-auto whitespace-nowrap text-[14px] text-ink-3 outline-none transition-colors duration-150 ease-out hover:text-ink focus-visible:underline"
           >
             Sound {sound ? "on" : "off"}
           </button>
@@ -298,11 +313,19 @@ export default function Shell({
           </div>
         </div>
 
-        <Bumper />
+        {/* The bumper's black runs on under the fixed bottom strip (and the
+            home indicator), so nothing green shows between them when the
+            page rubber-bands. */}
+        {bumper && (
+          <div className="shrink-0" style={{ backgroundColor: BLACK, paddingBottom: "var(--edge-bottom-h)" }}>
+            <Bumper />
+          </div>
+        )}
       </main>
       {/* Outside main (and any transformed ancestor) so they stay fixed to the viewport. */}
-      {/* Top in the ground; bottom carries on the bumper's black. */}
-      <EdgeStrips top={ground} bottom={BLACK} />
+      {/* Top in the ground; bottom carries on the bumper's black, or the
+          ground where there's no bumper. */}
+      <EdgeStrips top={ground} bottom={bumper ? BLACK : ground} />
     </ShellContext.Provider>
   );
 }

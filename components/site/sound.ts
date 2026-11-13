@@ -1,13 +1,14 @@
 /**
  * Interface sound, synthesised with Web Audio so there are no files to load.
  * Off until the visitor turns it on (browsers only allow audio after a
- * gesture anyway); the choice is remembered. Nothing plays when reduced
- * motion is requested.
+ * gesture anyway); the choice is remembered.
  *
- * Character: warm, low and soft, after the Devouring Details "Mantras"
- * audio (most energy under 500Hz, almost nothing above 6kHz). Everything
- * is unpitched noise shaped by filters, with no ringing tones, so nothing
+ * Character: warm and soft, after the Devouring Details "Mantras" audio,
+ * but voiced from ~300Hz up so laptop and phone speakers (which drop
+ * almost everything below that) can actually play it. Everything is
+ * unpitched noise shaped by filters, with no ringing tones, so nothing
  * reads as a mallet or a xylophone; it all runs through a gentle low-pass.
+ * A click peaks around -13dBFS.
  */
 
 const KEY = "sound";
@@ -21,19 +22,25 @@ function audio() {
     const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     ctx = new AC();
     master = ctx.createGain();
-    master.gain.value = 0.6;
+    master.gain.value = 0.8;
     // Take the edge off everything: warm, slightly muffled.
     const warm = ctx.createBiquadFilter();
     warm.type = "lowpass";
-    warm.frequency.value = 3200;
+    warm.frequency.value = 4500;
     warm.Q.value = 0.5;
     master.connect(warm).connect(ctx.destination);
   }
   return ctx;
 }
 
-const quiet = () =>
-  !enabled || typeof window === "undefined" || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Play now if audio is running, otherwise once it has resumed (the first
+// click after a reload, or Safari suspending it in the background).
+function play(fn: (c: AudioContext) => void) {
+  if (!enabled || !ctx) return;
+  const c = ctx;
+  if (c.state === "running") fn(c);
+  else c.resume().then(() => fn(c), () => {});
+}
 
 export function soundEnabled() {
   return enabled;
@@ -61,7 +68,7 @@ export function setSound(on: boolean) {
     localStorage.setItem(KEY, on ? "on" : "off");
   } catch {}
   if (on) {
-    audio().resume();
+    audio();
     tick(1);
   }
   listeners.forEach((l) => l(on));
@@ -90,7 +97,7 @@ function noiseBuffer(c: AudioContext) {
 }
 
 /** A burst of noise through a band-pass: the basic knock. */
-function knock(c: AudioContext, t: number, freq: number, q: number, peak: number, decay: number) {
+function knock(c: AudioContext, t: number, freq: number, q: number, peak: number, decay: number, dest?: AudioNode) {
   const src = c.createBufferSource();
   src.buffer = noiseBuffer(c);
   src.playbackRate.value = 0.9 + Math.random() * 0.2;
@@ -100,43 +107,58 @@ function knock(c: AudioContext, t: number, freq: number, q: number, peak: number
   bp.Q.value = q;
   const g = c.createGain();
   envelope(g, t, peak, decay);
-  src.connect(bp).connect(g).connect(master!);
+  src.connect(bp).connect(g).connect(dest ?? master!);
   src.start(t, Math.random() * 0.05);
   src.stop(t + decay + 0.02);
 }
 
 let lastClink = 0;
 
+// Placed left to right where the pendant hangs (they're 16px apart).
+const pendantPan = (i: number) =>
+  Math.max(-0.7, Math.min(0.7, (((i * 16 + 8) / window.innerWidth) * 2 - 1) * 0.7));
+
 /**
  * Pendants knocking together: a dry wooden-bead tock, different every
- * time, sometimes with a smaller second knock as they settle. `strength`
- * is 0..1.
+ * time, sometimes with a smaller second knock as they settle, placed where
+ * the pendant hangs. `strength` is 0..1.
  */
-export function clink(_index: number, strength: number) {
-  if (quiet() || !ctx || ctx.state !== "running") return;
-  const now = ctx.currentTime;
+export function clink(index: number, strength: number) {
+  // Only while audio is already running: a clink isn't worth waking it for.
+  if (!enabled || !ctx || ctx.state !== "running") return;
+  const c = ctx;
+  const now = c.currentTime;
   if (now - lastClink < 0.04) return; // no machine-gunning
   lastClink = now;
   const s = Math.min(1, strength);
-  const freq = 450 + Math.random() * 750;
-  const peak = 0.05 + 0.14 * s;
-  knock(ctx, now, freq, 2.2, peak, 0.018 + Math.random() * 0.01);
-  if (Math.random() < 0.35) knock(ctx, now + 0.012 + Math.random() * 0.02, freq * (0.85 + Math.random() * 0.3), 2.2, peak * 0.45, 0.015);
+  const freq = 500 + Math.random() * 700;
+  const peak = 0.15 + 0.4 * s;
+  let dest: AudioNode = master!;
+  if (c.createStereoPanner) {
+    const pan = c.createStereoPanner();
+    pan.pan.value = pendantPan(index);
+    pan.connect(master!);
+    dest = pan;
+  }
+  knock(c, now, freq, 2.2, peak, 0.018 + Math.random() * 0.01, dest);
+  if (Math.random() < 0.35)
+    knock(c, now + 0.012 + Math.random() * 0.02, freq * (0.85 + Math.random() * 0.3), 2.2, peak * 0.45, 0.015, dest);
 }
 
 /** A soft, low thock for clicks: a muffled knock with a little body. */
 export function tick(strength = 1) {
-  if (quiet() || !ctx || ctx.state !== "running") return;
-  const now = ctx.currentTime;
-  knock(ctx, now, 700 + Math.random() * 120, 1.2, 0.12 * strength, 0.03);
-  // Body: a very short low thump that falls in pitch, too brief to be a note.
-  const o = ctx.createOscillator();
-  const g = ctx.createGain();
-  o.type = "sine";
-  o.frequency.setValueAtTime(190, now);
-  o.frequency.exponentialRampToValueAtTime(80, now + 0.05);
-  envelope(g, now, 0.09 * strength, 0.05);
-  o.connect(g).connect(master!);
-  o.start(now);
-  o.stop(now + 0.07);
+  play((c) => {
+    const now = c.currentTime;
+    knock(c, now, 1050 + Math.random() * 120, 1.3, 0.55 * strength, 0.035);
+    // Body: a very short thump that falls in pitch, too brief to be a note.
+    const o = c.createOscillator();
+    const g = c.createGain();
+    o.type = "sine";
+    o.frequency.setValueAtTime(360, now);
+    o.frequency.exponentialRampToValueAtTime(170, now + 0.045);
+    envelope(g, now, 0.22 * strength, 0.045);
+    o.connect(g).connect(master!);
+    o.start(now);
+    o.stop(now + 0.065);
+  });
 }

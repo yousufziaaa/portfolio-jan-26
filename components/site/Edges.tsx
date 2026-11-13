@@ -14,10 +14,12 @@ import { useEffect, useLayoutEffect, useRef, type CSSProperties } from "react";
  * The values go to the strips (via --edge-top-background /
  * --edge-bottom-background), the body (bottom), the theme-color meta tag
  * (top), and the html background, which is what Safari shows when you
- * pull past either end of the page. That one swaps with scroll position:
- * the top colour in the upper half, so the bounce above the jhalar is
- * ground, and the bottom in the lower half, so the bounce below the
- * bumper carries on its black.
+ * pull past either end of the page. That one follows the direction you
+ * last scrolled: heading down it's the bottom colour, so the bounce below
+ * the bumper carries on its black; heading up it's the top colour, so the
+ * bounce above the jhalar is ground. Direction comes from the wheel and
+ * touch as well as scroll events, because on a page that fits the screen,
+ * and in Chrome, rubber-banding never changes scrollY.
  */
 
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
@@ -43,17 +45,36 @@ export default function EdgeStrips({ top, bottom }: { top: string; bottom: strin
     let under = { top: "", bottom: "" };
     html.setAttribute("data-edges", "");
 
-    // Past halfway, or rubber-banding past the end (scrollY beyond max),
-    // the next bounce will be at the bottom.
+    let down = false;
     let painted = "";
     const paintUnder = () => {
-      const max = html.scrollHeight - window.innerHeight;
-      const colour = window.scrollY > max / 2 ? under.bottom : under.top;
+      const colour = down ? under.bottom : under.top;
       if (colour && colour !== painted) html.style.backgroundColor = painted = colour;
     };
-    window.addEventListener("scroll", paintUnder, { passive: true });
-    window.addEventListener("resize", paintUnder);
-    window.addEventListener("pageshow", paintUnder);
+    const heading = (d: boolean) => {
+      down = d;
+      paintUnder();
+    };
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y !== lastY) heading(y > lastY);
+      lastY = y;
+    };
+    const onWheel = (e: WheelEvent) => e.deltaY && heading(e.deltaY > 0);
+    let touchY = 0;
+    const onTouchStart = (e: TouchEvent) => (touchY = e.touches[0]?.clientY ?? 0);
+    const onTouchMove = (e: TouchEvent) => {
+      const y = e.touches[0]?.clientY ?? touchY;
+      // A finger moving up scrolls the page down.
+      if (Math.abs(y - touchY) > 2) heading(y < touchY);
+      touchY = y;
+    };
+    const opts = { passive: true } as const;
+    window.addEventListener("scroll", onScroll, opts);
+    window.addEventListener("wheel", onWheel, opts);
+    window.addEventListener("touchstart", onTouchStart, opts);
+    window.addEventListener("touchmove", onTouchMove, opts);
 
     const setMeta = () => {
       let meta = findMeta();
@@ -82,9 +103,10 @@ export default function EdgeStrips({ top, bottom }: { top: string; bottom: strin
     return () => {
       applyRef.current = () => {};
       mo.disconnect();
-      window.removeEventListener("scroll", paintUnder);
-      window.removeEventListener("resize", paintUnder);
-      window.removeEventListener("pageshow", paintUnder);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
       html.style.setProperty("--edge-top-background", saved.top);
       html.style.setProperty("--edge-bottom-background", saved.bottom);
       html.style.backgroundColor = saved.htmlBg;
