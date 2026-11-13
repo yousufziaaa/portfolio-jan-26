@@ -68,6 +68,9 @@ export function Jhalar() {
 
     let raf = 0;
     let last = 0;
+    // Swinging set off by scrolling is silent; only the cursor's breeze
+    // makes the pendants clink. Cleared when the row comes to rest.
+    let fromScroll = false;
     const kick = () => {
       if (!raf) {
         last = performance.now();
@@ -100,7 +103,7 @@ export function Jhalar() {
             const p = ma * va + mb * vb;
             om[i] = (p - mb * E * (va - vb)) / (ma + mb) / ca;
             om[i + 1] = (p + ma * E * (va - vb)) / (ma + mb) / cb;
-            if (va - vb > 25) clink(i, (va - vb) / 500);
+            if (va - vb > 25 && !fromScroll) clink(i, (va - vb) / 500);
           }
           th[i] -= overlap / 2 / len[i];
           th[i + 1] += overlap / 2 / len[i + 1];
@@ -119,6 +122,7 @@ export function Jhalar() {
         om.fill(0);
         armRefs.current.forEach((el) => el && (el.style.transform = ""));
         raf = 0;
+        fromScroll = false;
       }
     };
 
@@ -138,6 +142,7 @@ export function Jhalar() {
           const fall = Math.max(0, 1 - d / 26);
           om[i] += (Math.max(-7, Math.min(7, vx * 4)) * fall * catchWind[i]) / mass[i];
         }
+        fromScroll = false;
         kick();
       }
       px = x;
@@ -152,6 +157,7 @@ export function Jhalar() {
       lastY = window.scrollY;
       const push = Math.max(-5, Math.min(5, -dy * 0.06));
       for (let i = 0; i < COUNT; i++) om[i] += (push * catchWind[i]) / mass[i];
+      fromScroll = true;
       kick();
     };
 
